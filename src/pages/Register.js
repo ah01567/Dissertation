@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from './firebase';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
  
 const Register = () => {
     const navigate = useNavigate();
@@ -31,59 +33,43 @@ const Register = () => {
     }
  
   return (
-    <main >        
-        <section>
             <div>
                 <div>                  
                     <h1> Register form </h1>                                                                            
-                    <form>                                                                                            
-                        <div>
-                            <label htmlFor="email-address">
-                                Email address
-                            </label>
-                            <input
-                                type="email"
-                                label="Email address"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}  
-                                required                                    
-                                placeholder="Email address"                                
-                            />
-                        </div>
+                    <Form>   
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email"
+                                      label="Email address"
+                                      value={email}
+                                      onChange={(e) => setEmail(e.target.value)}  
+                                      required                                    
+                                      placeholder="Email address"  />
+                        </Form.Group> 
 
-                        <div>
-                            <label htmlFor="password">
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                label="Create password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)} 
-                                required                                 
-                                placeholder="Password"              
-                            />
-                        </div>                                             
-                        
-                        <button
-                            type="submit" 
-                            onClick={onSubmit}                        
-                        >  
-                            Sign up                                
-                        </button>
-                                                                     
-                    </form>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password"
+                                      label="Create password"
+                                      value={password}
+                                      onChange={(e) => setPassword(e.target.value)} 
+                                      required                                 
+                                      placeholder="Password"  />
+                        </Form.Group>                                           
+
+                        <Button variant="primary" type="submit" onClick={onSubmit} >
+                            Register account
+                        </Button>                                       
+                    </Form>
                    
-                    <p>
+                    <Form.Text className="text-muted">
                         Already have an account?{' '}
                         <NavLink to="/login" >
                             Sign in
                         </NavLink>
-                    </p>                   
+                        </Form.Text>                   
                 </div>
             </div>
-        </section>
-    </main>
   )
 }
  

@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from './firebase';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
  
 const Login = () => {
     const navigate = useNavigate();
@@ -26,18 +28,14 @@ const Login = () => {
     }
  
     return(
-        <>
-            <main >        
-                <section>
+            <div>
                     <div>                                            
                         <h1> Login form </h1>                       
                                                        
-                        <form>                                              
-                            <div>
-                                <label htmlFor="email-address">
-                                    Email address
-                                </label>
-                                <input
+                        <Form>                                              
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control
                                     id="email-address"
                                     name="email"
                                     type="email"                                    
@@ -45,13 +43,11 @@ const Login = () => {
                                     placeholder="Email address"
                                     onChange={(e)=>setEmail(e.target.value)}
                                 />
-                            </div>
-
-                            <div>
-                                <label htmlFor="password">
-                                    Password
-                                </label>
-                                <input
+                            </Form.Group>
+   
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
                                     id="password"
                                     name="password"
                                     type="password"                                    
@@ -59,16 +55,12 @@ const Login = () => {
                                     placeholder="Password"
                                     onChange={(e)=>setPassword(e.target.value)}
                                 />
-                            </div>
+                            </Form.Group>
                                                 
-                            <div>
-                                <button                                    
-                                    onClick={LoginFunction}                                        
-                                >      
-                                    Login                                                                  
-                                </button>
-                            </div>                               
-                        </form>
+                            <Button variant="primary" type="submit" onClick={LoginFunction} >
+                                Login
+                            </Button>                             
+                        </Form>
                        
                         <p className="text-sm text-white text-center">
                             No account yet? {' '}
@@ -78,9 +70,7 @@ const Login = () => {
                         </p>
                                                    
                     </div>
-                </section>
-            </main>
-        </>
+            </div>
     )
 }
  
