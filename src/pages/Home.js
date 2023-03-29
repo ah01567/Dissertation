@@ -4,6 +4,7 @@ import { auth } from './firebase';
 import { useNavigate } from 'react-router-dom';
 import {  signOut } from "firebase/auth";
 import Login from './Login';
+import NavBar from '../components/NavBar';
  
 const Home = () => {
 
@@ -37,6 +38,10 @@ const Home = () => {
             <Login />
             ) : (            
             <nav>
+                <div>
+                    <NavBar />
+                </div>
+                
                 <p>
                     Welcome Home {currentUser.email}
                 </p>
