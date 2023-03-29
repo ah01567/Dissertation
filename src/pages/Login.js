@@ -28,11 +28,9 @@ const Login = () => {
     }
  
     return(
-            <div>
-                    <div>                                            
-                        <h1> Login form </h1>                       
-                                                       
-                        <Form>                                              
+            <div>                                                                                        
+                    <Form style={{ maxWidth: 500, margin: '0 auto' }}>  
+                            <h1> Login form </h1>                                             
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
@@ -59,17 +57,17 @@ const Login = () => {
                                                 
                             <Button variant="primary" type="submit" onClick={LoginFunction} >
                                 Login
-                            </Button>                             
-                        </Form>
-                       
-                        <p className="text-sm text-white text-center">
-                            No account yet? {' '}
-                            <NavLink to="/register">
-                                Sign up
-                            </NavLink>
-                        </p>
-                                                   
-                    </div>
+                            </Button>  
+
+                            <div>
+                                <Form.Text className="text-muted">
+                                    New user ?{' '}
+                                    <NavLink to="/register" >
+                                        Register account
+                                    </NavLink>
+                                </Form.Text>   
+                            </div>                        
+                        </Form>                                          
             </div>
     )
 }

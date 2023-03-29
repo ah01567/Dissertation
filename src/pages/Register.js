@@ -67,7 +67,7 @@ const Register = () => {
                         <NavLink to="/login" >
                             Sign in
                         </NavLink>
-                        </Form.Text>                   
+                    </Form.Text>                   
                 </div>
             </div>
   )
