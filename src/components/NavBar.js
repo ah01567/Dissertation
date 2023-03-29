@@ -2,18 +2,19 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import '../design/Navbar.css';
 
 function ColorSchemesExample() {
   return (
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="dark" variant="dark" >
         <Container>
-          <Navbar.Brand href="#home">MyOnlyBook</Navbar.Brand>
+          <Navbar.Brand href="#home" className='NavLogoWithMargin'>MyOnlyBook</Navbar.Brand>
             <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/">Course</Nav.Link>
-                <Nav.Link href="/">ChatBox</Nav.Link>
-                <Nav.Link href="/">Progress</Nav.Link>
-                <Nav.Link href="/">Feedback</Nav.Link>
+                <Nav.Link href="/" className='NavItemWithMargin'>Home</Nav.Link>
+                <Nav.Link href="/" className='NavItemWithMargin'>Course</Nav.Link>
+                <Nav.Link href="/" className='NavItemWithMargin'>ChatBox</Nav.Link>
+                <Nav.Link href="/" className='NavItemWithMargin'>Progress</Nav.Link>
+                <Nav.Link href="/" className='NavItemWithMargin'>Feedback</Nav.Link>
                 <NavDropdown title="User" id="navbarScrollingDropdown">
                     <NavDropdown.Item href="/">Profile settings</NavDropdown.Item>
                     <NavDropdown.Item href="/">Privacy policy</NavDropdown.Item>
