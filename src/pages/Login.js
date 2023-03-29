@@ -4,6 +4,7 @@ import { auth } from './firebase';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import '../Design/authForms.css';
  
 const Login = () => {
     const navigate = useNavigate();
@@ -28,11 +29,12 @@ const Login = () => {
     }
  
     return(
-            <div>                                                                                        
-                    <Form style={{ maxWidth: 500, margin: '0 auto' }}>  
-                            <h1> Login form </h1>                                             
+            <div className='form-container'>                                                                                     
+                    <Form className="forms">  
+                            <h1> <u>Login form: </u></h1>    
+                            <h5>Welcome to MyOnlyBook. Please login into your account here</h5>                                         
                             <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
+                                <Form.Label>Email address:*</Form.Label>
                                 <Form.Control
                                     id="email-address"
                                     name="email"
@@ -44,7 +46,7 @@ const Login = () => {
                             </Form.Group>
    
                             <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
+                                <Form.Label>Password:*</Form.Label>
                                 <Form.Control
                                     id="password"
                                     name="password"
@@ -55,7 +57,7 @@ const Login = () => {
                                 />
                             </Form.Group>
                                                 
-                            <Button variant="primary" type="submit" onClick={LoginFunction} >
+                            <Button className="button" variant="success" type="submit" onClick={LoginFunction} >
                                 Login
                             </Button>  
 
@@ -66,8 +68,17 @@ const Login = () => {
                                         Register account
                                     </NavLink>
                                 </Form.Text>   
-                            </div>                        
-                        </Form>                                          
+                            </div>     
+
+                            <div>
+                                <Form.Text className="text-muted">
+                                    Forgot your password ?{' '}
+                                    <NavLink to="/login" >
+                                        Reset password
+                                    </NavLink>
+                                </Form.Text>   
+                            </div>                       
+                    </Form>                                          
             </div>
     )
 }
