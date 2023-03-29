@@ -4,7 +4,7 @@ import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from './firebase';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import '../Design/authForms.css';
+import '../design/authForms.css';
  
 const Register = () => {
     const navigate = useNavigate();

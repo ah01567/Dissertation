@@ -4,7 +4,7 @@ import { auth } from './firebase';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import '../Design/authForms.css';
+import '../design/authForms.css';
  
 const Login = () => {
     const navigate = useNavigate();
