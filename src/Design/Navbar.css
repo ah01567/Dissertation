@@ -1,0 +1,15 @@
+  .navbar {
+    background-color: purple;
+    font-size: 1.2rem;
+  }
+  .NavLogoWithMargin {
+    margin-right: 100px;
+
+  }
+  .NavItemWithMargin {
+    margin-right: 20px;
+    
+  }
+  .nav-link:hover {
+    color: yellow;
+  }

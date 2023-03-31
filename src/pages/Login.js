@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from './firebase';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import '../design/authForms.css';
  
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [error, setError] = useState('');
        
     const LoginFunction = (e) => {
         e.preventDefault();
@@ -18,26 +24,25 @@ const Login = () => {
             console.log(user);
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });
+           if (error.code === "auth/user-not-found") {
+                setError("This email address is not valid. please register first");
+             } else if (error.code === "auth/wrong-password") {
+                setError("Incorrect password. Try again");
+            } 
+         })
+        };
        
-    }
+    
  
     return(
-        <>
-            <main >        
-                <section>
-                    <div>                                            
-                        <h1> Login form </h1>                       
-                                                       
-                        <form>                                              
-                            <div>
-                                <label htmlFor="email-address">
-                                    Email address
-                                </label>
-                                <input
+            <div className='form-container'>   
+            {error && <Alert style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999}} key='danger' variant='danger'>{error}</Alert> }                                                                         
+                    <Form className="forms">  
+                            <h1 className='form-title'> <b>MyOnlyBook </b></h1>    
+                            <div className='form-description'>Welcome to MyOnlyBook. Please <b>log in</b> into your account here</div>                                         
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Email address:*</Form.Label>
+                                <Form.Control
                                     id="email-address"
                                     name="email"
                                     type="email"                                    
@@ -45,13 +50,11 @@ const Login = () => {
                                     placeholder="Email address"
                                     onChange={(e)=>setEmail(e.target.value)}
                                 />
-                            </div>
-
-                            <div>
-                                <label htmlFor="password">
-                                    Password
-                                </label>
-                                <input
+                            </Form.Group>
+   
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label>Password:*</Form.Label>
+                                <Form.Control
                                     id="password"
                                     name="password"
                                     type="password"                                    
@@ -59,28 +62,35 @@ const Login = () => {
                                     placeholder="Password"
                                     onChange={(e)=>setPassword(e.target.value)}
                                 />
-                            </div>
-                                                
+                            </Form.Group>
+
+                            <div>{error}</div> 
+
+                            <Button className="button-auth" variant="success" type="submit" onClick={LoginFunction} >
+                                Login
+                            </Button>  
+
                             <div>
-                                <button                                    
-                                    onClick={LoginFunction}                                        
-                                >      
-                                    Login                                                                  
-                                </button>
-                            </div>                               
-                        </form>
-                       
-                        <p className="text-sm text-white text-center">
-                            No account yet? {' '}
-                            <NavLink to="/register">
-                                Sign up
-                            </NavLink>
-                        </p>
-                                                   
-                    </div>
-                </section>
-            </main>
-        </>
+                                <Form.Text className="text-muted">
+                                    New user ?{' '}
+                                    <NavLink to="/register" >
+                                        Register account
+                                    </NavLink>
+                                </Form.Text>   
+                            </div>     
+
+                            <div>
+                                <Form.Text className="text-muted">
+                                    Forgot your password ?{' '}
+                                    <NavLink to="/login" >
+                                        Reset password
+                                    </NavLink>
+                                </Form.Text>   
+                            </div>                        
+                    </Form>   
+
+                                 
+            </div>
     )
 }
  
