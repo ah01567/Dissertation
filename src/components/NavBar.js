@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { auth } from '../pages/firebase';
 import { useNavigate } from 'react-router-dom';
 import {  signOut } from "firebase/auth";
-import '../design/Navbar.css';
+import '../Design/Navbar.css';
 import { Link } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import { FaBook } from "react-icons/fa";
