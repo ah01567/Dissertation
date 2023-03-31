@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from './firebase';
 import { NavLink, useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../design/authForms.css';
@@ -10,6 +11,8 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [error, setError] = useState('');
        
     const LoginFunction = (e) => {
         e.preventDefault();
@@ -21,18 +24,22 @@ const Login = () => {
             console.log(user);
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });
+           if (error.code === "auth/user-not-found") {
+                setError("This email address is not valid. please register first");
+             } else if (error.code === "auth/wrong-password") {
+                setError("Incorrect password. Try again");
+            } 
+         })
+        };
        
-    }
+    
  
     return(
-            <div className='form-container'>                                                                                     
+            <div className='form-container'>   
+            {error && <Alert style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999}} key='danger' variant='danger'>{error}</Alert> }                                                                         
                     <Form className="forms">  
-                            <h1> <u>Login form: </u></h1>    
-                            <h5>Welcome to MyOnlyBook. Please login into your account here</h5>                                         
+                            <h1 className='form-title'> <b>MyOnlyBook </b></h1>    
+                            <div className='form-description'>Welcome to MyOnlyBook. Please <b>log in</b> into your account here</div>                                         
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Email address:*</Form.Label>
                                 <Form.Control
@@ -56,8 +63,10 @@ const Login = () => {
                                     onChange={(e)=>setPassword(e.target.value)}
                                 />
                             </Form.Group>
-                                                
-                            <Button className="button" variant="success" type="submit" onClick={LoginFunction} >
+
+                            <div>{error}</div> 
+
+                            <Button className="button-auth" variant="success" type="submit" onClick={LoginFunction} >
                                 Login
                             </Button>  
 
@@ -77,8 +86,10 @@ const Login = () => {
                                         Reset password
                                     </NavLink>
                                 </Form.Text>   
-                            </div>                       
-                    </Form>                                          
+                            </div>                        
+                    </Form>   
+
+                                 
             </div>
     )
 }

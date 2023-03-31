@@ -1,16 +1,35 @@
 .form-container {
     padding-top: 100px;
+    background-image: url(/Users/ahmedhenine/Desktop/myonlybook/src/img/kids.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
 }
-  
 .forms {
-    background-color: aliceblue;
-    max-width: 700px;
+    background-color: rgb(254, 254, 254);
+    max-width: 600px;
     margin: 0 auto;
     border: 1px solid black;
-    border-radius: 20px;;
+    border-radius: 20px;
     padding: 20px;
     
   }
-.button {
+.form-title {
+    text-align: center;
+    font-family: 'Apple Chancery';
+}
+.form-description {
+    font-size: 20px;
+}
+.radio {
+    text-align: center;
+    margin-bottom: 7px;
+}
+.button-auth {
     width: 100%;
+    margin-bottom: 3px;
+}
+.button-back-to-login {
+    width: 100%;
+    margin-top: 3px;
 }
