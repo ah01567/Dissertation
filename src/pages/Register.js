@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { ref, set } from "firebase/database";
+import { db } from './firebase';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { FormGroup, FormCheck } from 'react-bootstrap';
 import { auth } from './firebase';
@@ -28,8 +30,18 @@ const Register = () => {
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
+            const uid = user.uid;
             console.log(user);
             navigate("/")
+
+            const userRef = ref(db, `Users/${uid}`);
+            const userData = {
+                fname: fname,
+                lname: lname, 
+                role: role, 
+                email: email,
+              };
+              set(userRef, userData);
         })
         .catch((error) => {
             if(error.code === "auth/email-already-in-use") {
