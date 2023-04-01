@@ -1,0 +1,9 @@
+.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: purple;
+    transform: scale(1.5);
+    flex-direction: column;
+}

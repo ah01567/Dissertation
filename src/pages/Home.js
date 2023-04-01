@@ -3,10 +3,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
 import Login from './Login';
 import NavBar from '../components/NavBar';
- 
+import Spinner from '../components/Spinner';
+
 const Home = () => {
 
+    const [firebaseInitialized, setFirebaseInitialized] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
+    
     useEffect(()=>{
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -14,9 +17,14 @@ const Home = () => {
             } else {
                 setCurrentUser(false);
             }
+            setFirebaseInitialized(true);
           });
          
     }, [])
+
+    if (!firebaseInitialized) {
+        return <Spinner />;
+      }
 
     return(
         <div>
