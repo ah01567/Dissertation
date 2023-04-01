@@ -7,7 +7,7 @@ import { auth } from './firebase';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import '../design/authForms.css';
+import '../Design/authForms.css';
  
 const Register = () => {
     //Constants and Variables
