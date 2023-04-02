@@ -28,7 +28,9 @@ const Login = () => {
                 setError("This email address is not valid. please register first");
              } else if (error.code === "auth/wrong-password") {
                 setError("Incorrect password. Try again");
-            } 
+            } else if (error.code === "auth/invalid-email") {
+                setError("This email is not valid. Please check your email");
+            }
          })
         };
        
