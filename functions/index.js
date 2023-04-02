@@ -16,6 +16,14 @@ exports.checkUserRole = functions.auth.user().onCreate(async (user) => {
     const role = snapshot.child('role').val();
   
     if (role === 'TEACHER') {
-      await admin.auth().setCustomUserClaims(user.uid, { admin: true });
+      await admin.auth().setCustomUserClaims(user.uid, { 
+        admin: true 
+      }).then(() => {
+        return {
+          message: 'Congrats !! You are now an Admin'
+        }
+      }).catch (err => {
+        return err; 
+      });
     }
   });
