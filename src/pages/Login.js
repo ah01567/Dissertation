@@ -64,8 +64,6 @@ const Login = () => {
                                 />
                             </Form.Group>
 
-                            <div>{error}</div> 
-
                             <Button className="button-auth" variant="success" type="submit" onClick={LoginFunction} >
                                 Login
                             </Button>  
