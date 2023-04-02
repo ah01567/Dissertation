@@ -39,6 +39,12 @@ const Home = () => {
                 <p>
                     Welcome Home {currentUser.email}
                 </p>
+
+                {currentUser && currentUser.customClaims && currentUser.customClaims.admin && ( // Conditional rendering based on custom claims
+                <div>
+                    <p>Iam an ADMIN !!!!</p>
+                </div>
+                )}
             </nav>)}
         </div>
     )
