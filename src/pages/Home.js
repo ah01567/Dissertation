@@ -14,12 +14,12 @@ const Home = () => {
     return(
         <div>
             {!currentUser ? (
-            <Login />
+                <div><Login /></div>
             ) : (            
             <nav>
                 <div>
                     <NavBar />
-                </div>
+                </div>      
                 
                 <div>
                     {isAdmin && <p>I am an admin</p>}
