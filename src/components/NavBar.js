@@ -16,7 +16,7 @@ import { FaWpforms } from "react-icons/fa";
 
 function ColorSchemesExample() {
 
-  const { currentUser, isAdmin, firebaseInitialized } = useAuth();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate(); 
 
   const handleLogout = () => {               
