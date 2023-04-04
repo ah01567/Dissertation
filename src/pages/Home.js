@@ -21,10 +21,10 @@ const Home = () => {
                     <NavBar />
                 </div>
                 
-            <div>
-                {isAdmin && <p>I am an admin</p>}
-                {/* Add other content here */}
-            </div>
+                <div>
+                    {isAdmin && <p>I am an admin</p>}
+                    {/* Add other content here */}
+                </div>
 
             </nav>)}
         </div>
