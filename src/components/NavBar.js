@@ -16,7 +16,7 @@ import { FaWpforms } from "react-icons/fa";
 
 function ColorSchemesExample() {
 
-  const { currentUser, isAdmin, firebaseInitialized } = useAuth();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate(); 
 
   const handleLogout = () => {               
@@ -43,7 +43,7 @@ function ColorSchemesExample() {
                     <NavDropdown.Item as={Link} to="/">Profile settings</NavDropdown.Item>
                     {isAdmin && <NavDropdown.Item as={Link} to="/">MyStudents List</NavDropdown.Item> }
                     <NavDropdown.Item as={Link} to="/">Privacy policy</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/">Contact Us</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/">Contact Us </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item as={Link} to="/" onClick={handleLogout}>
                         Logout
