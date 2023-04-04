@@ -59,7 +59,7 @@ const Register = () => {
  
   return (
             <div className='form-container'>   
-            {error && <Alert style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999}} key='danger' variant='danger'>{error}</Alert> }                     <Form className="forms">
+            {error && <Alert style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999}} key='danger' variant='danger'>{error}</Alert> }<Form className="forms">
                     <h1 className='form-title'> <b>MyOnlyBook </b></h1>    
                             <div className='form-description'>Welcome to MyOnlyBook. Please <b>register</b> your account here</div><br/> 
 

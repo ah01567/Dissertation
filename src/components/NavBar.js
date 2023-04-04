@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { auth } from '../pages/firebase';
+import useAuth from "../pages/CurrentUser";
 import { useNavigate } from 'react-router-dom';
 import {  signOut } from "firebase/auth";
 import '../Design/Navbar.css';
@@ -15,6 +16,7 @@ import { FaWpforms } from "react-icons/fa";
 
 function ColorSchemesExample() {
 
+  const { currentUser, isAdmin, firebaseInitialized } = useAuth();
   const navigate = useNavigate(); 
 
   const handleLogout = () => {               
@@ -23,7 +25,7 @@ function ColorSchemesExample() {
         navigate("/login");
         console.log("Signed out successfully")
     }).catch((error) => {
-    // An error happened.
+        console.log(error);
     });
 }
 
@@ -39,6 +41,7 @@ function ColorSchemesExample() {
                 <Nav.Link as={Link} to="/" className='NavItemWithMargin'> <FaWpforms/> Feedback</Nav.Link>
                 <NavDropdown title="User" id="navbarScrollingDropdown" >
                     <NavDropdown.Item as={Link} to="/">Profile settings</NavDropdown.Item>
+                    {isAdmin && <NavDropdown.Item as={Link} to="/">MyStudents List</NavDropdown.Item> }
                     <NavDropdown.Item as={Link} to="/">Privacy policy</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/">Contact Us</NavDropdown.Item>
                     <NavDropdown.Divider />
