@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
-import ModuleTicket from '../components/ModuleTicket';
+import GeneralKnowledgeTicket from '../components/GeneralKnowledgeTicket';
 
 const Home = () => {
     const { firebaseInitialized } = useAuth();
@@ -14,7 +14,7 @@ const Home = () => {
         <div>
             <div><NavBar/></div>      
             <div className='module-tickets'>
-                <ModuleTicket/>
+                <GeneralKnowledgeTicket/>
             </div>
         </div>
     )
