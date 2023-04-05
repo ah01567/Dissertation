@@ -9,18 +9,29 @@ import Modal from 'react-modal';
 import '../Design/Modal.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
+import { db } from './firebase';
+import { ref, set } from "firebase/database";
 
 const Home = () => {
 
-    const { firebaseInitialized } = useAuth();
+    const { currentUser, firebaseInitialized } = useAuth();
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
 
     if (!firebaseInitialized) {
         return <Spinner />;
       }
  
-    return(
+    const addModule = (title, image) => {
+        const teacherID = currentUser.uid;
+        const modulesRef = ref(db, `Modules/${teacherID}`);
+        const moduleData = {
+          title: title,
+          image: image,
+        };
+        set(modulesRef, moduleData);
+    };
+      
+    return(       
         <div>
             <div><NavBar/></div>    
 
@@ -31,16 +42,22 @@ const Home = () => {
 
             <Modal isOpen={showNewModuleSection} onRequestClose={() => setShowNewModuleSection(false)} className="modal-container" overlayClassName="modal-overlay">
                 <h2>Create New Module</h2>
-                <Form>
+                <Form onSubmit={(event) => {
+                    event.preventDefault();
+                    const title = event.target.elements.title.value;
+                    const image = event.target.elements.image.files[0];
+                    addModule(title, image);
+                    setShowNewModuleSection(false);
+                }}>
                     <label>
-                        <h5>Module title:</h5> <Form.Control type="text" placeholder="Module name .."/>
+                        <h5>Module title:</h5> <Form.Control type="text" name="title" placeholder="Module name .."/>
                     </label> <br/>
                     <label className="upload-img">
-                        <h5>Module Image:</h5> <input type="file" accept="image/*" />
+                        <h5>Module Image:</h5> <input type="file" name="image" accept="image/*" />
                     </label>
                     <div className="button-group">
                         <Button className='cancel-btn' variant="danger" onClick={() => setShowNewModuleSection(false)}>Cancel</Button>
-                        <Button className='add-btn' variant="success">Add Module</Button>
+                        <Button className='add-btn' variant="success" type="submit">Add Module</Button>
                     </div>
                 </Form>
             </Modal>
