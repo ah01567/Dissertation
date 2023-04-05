@@ -23,7 +23,6 @@ const Home = () => {
                 
                 <div>
                     {isAdmin && <p>I am an admin</p>}
-                    {/* Add other content here */}
                 </div>
 
             </nav>)}

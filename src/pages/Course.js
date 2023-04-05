@@ -14,7 +14,7 @@ import { ref, set } from "firebase/database";
 
 const Home = () => {
 
-    const { currentUser, firebaseInitialized } = useAuth();
+    const { currentUser, isAdmin, firebaseInitialized } = useAuth();
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
     const [imagePath, setImagePath] = useState('');
 
@@ -38,7 +38,7 @@ const Home = () => {
             <div><NavBar/></div>    
 
             <div className='module'>
-                <button className="upload-btn" onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>
+                {isAdmin && <button className="upload-btn" onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
                 <button className="upload-btn"> <b>General Knowledge</b></button> 
             </div>  
 
