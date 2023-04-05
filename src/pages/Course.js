@@ -16,20 +16,22 @@ const Home = () => {
 
     const { currentUser, firebaseInitialized } = useAuth();
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
+    const [imagePath, setImagePath] = useState('');
 
-    if (!firebaseInitialized) {
-        return <Spinner />;
-      }
- 
-    const addModule = (title, image) => {
+    
+    const addModule = (title, imagePath) => {
         const teacherID = currentUser.uid;
-        const modulesRef = ref(db, `Modules/${teacherID}`);
+        const modulesRef = ref(db, `Modules/${teacherID}/${title}`);
         const moduleData = {
           title: title,
-          image: image,
+          image: imagePath,
         };
         set(modulesRef, moduleData);
     };
+    
+    if (!firebaseInitialized) {
+        return <Spinner />;
+      }
       
     return(       
         <div>
@@ -45,15 +47,14 @@ const Home = () => {
                 <Form onSubmit={(event) => {
                     event.preventDefault();
                     const title = event.target.elements.title.value;
-                    const image = event.target.elements.image.files[0];
-                    addModule(title, image);
+                    addModule(title, imagePath);
                     setShowNewModuleSection(false);
                 }}>
                     <label>
                         <h5>Module title:</h5> <Form.Control type="text" name="title" placeholder="Module name .."/>
                     </label> <br/>
                     <label className="upload-img">
-                        <h5>Module Image:</h5> <input type="file" name="image" accept="image/*" />
+                        <h5>Module Image:</h5> <input type="file" name="image" accept="image/*" onChange={(e) => setImagePath(e.target.value)}/>
                     </label>
                     <div className="button-group">
                         <Button className='cancel-btn' variant="danger" onClick={() => setShowNewModuleSection(false)}>Cancel</Button>
