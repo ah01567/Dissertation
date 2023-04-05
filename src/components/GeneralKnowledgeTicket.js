@@ -1,16 +1,10 @@
 import React from 'react';
-import { FaPlus } from 'react-icons/fa';
 import Card from 'react-bootstrap/Card';
 import '../Design/ModuleTicket.css';
 
 const ModuleButton = () => {
     return (
         <div>
-            <div className='module'>
-                <button className="upload-btn"><FaPlus className="plus-icon" /></button>
-                <button className="upload-btn"> <b>General Knowledge</b></button> 
-                <button className="upload-btn"> <b>Maths</b></button> 
-            </div>
             <div className='module-card'>
             <Card>
                 <div className='module-title'><h2>General Knowledge</h2></div>

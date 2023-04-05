@@ -3,7 +3,8 @@ import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
 import GeneralKnowledgeTicket from '../components/GeneralKnowledgeTicket';
-
+import { FaPlus } from 'react-icons/fa';
+import '../Design/ModuleTicket.css';
 const Home = () => {
     const { firebaseInitialized } = useAuth();
     if (!firebaseInitialized) {
@@ -12,7 +13,12 @@ const Home = () => {
  
     return(
         <div>
-            <div><NavBar/></div>      
+            <div><NavBar/></div>    
+            <div className='module'>
+                <button className="upload-btn"><FaPlus className="plus-icon" /></button>
+                <button className="upload-btn"> <b>General Knowledge</b></button> 
+                <button className="upload-btn"> <b>Maths</b></button> 
+            </div>  
             <div className='module-tickets'>
                 <GeneralKnowledgeTicket/>
             </div>
