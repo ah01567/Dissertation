@@ -9,10 +9,12 @@
     "bootstrap": "^5.2.3",
     "firebase": "^9.6.1",
     "firebase-admin": "^11.5.0",
+    "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
@@ -42,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "babel-loader": "^9.1.2",
     "eslint-plugin-react-hooks": "^4.6.0"
   }
 }
