@@ -10,13 +10,17 @@ import '../Design/Modal.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { db } from './firebase';
-import { ref, set } from "firebase/database";
+import { useEffect } from 'react';
+import { onValue, off, ref, set } from 'firebase/database';
+
 
 const Home = () => {
 
     const { currentUser, isAdmin, firebaseInitialized } = useAuth();
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
     const [imagePath, setImagePath] = useState('');
+    const [moduleTitles, setModuleTitles] = useState([]);
+
 
     
     const addModule = (title, imagePath) => {
@@ -28,7 +32,37 @@ const Home = () => {
         };
         set(modulesRef, moduleData);
     };
-    
+
+    useEffect(() => {
+        // Listen for changes to the Modules collection in the realtime database
+        const modulesRef = ref(db, 'Modules');
+        if (modulesRef) {
+          onValue(modulesRef, (snapshot) => {
+            const modulesData = snapshot.val();
+            if (modulesData) {
+              // Convert the modules data to an array of objects with title and id properties
+              const modulesList = Object.keys(modulesData).map((teacherID) => {
+                const teacherModules = modulesData[teacherID];
+                return Object.keys(teacherModules).map((title) => {
+                  return {
+                    id: `${teacherID}-${title}`,
+                    title,
+                  };
+                });
+              }).flat();
+              setModuleTitles(modulesList.map(module => module.title));
+            }
+          });
+        }
+        // Cleanup function to remove the listener when the component unmounts
+        return () => {
+          if (modulesRef) {
+            off(modulesRef);
+          }
+        };
+      }, []);
+
+      
     if (!firebaseInitialized) {
         return <Spinner />;
       }
@@ -40,6 +74,9 @@ const Home = () => {
             <div className='module'>
                 {isAdmin && <button className="upload-btn" onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
                 <button className="upload-btn"> <b>General Knowledge</b></button> 
+                {moduleTitles.map(title => (
+                    <button className="upload-btn" key={title}><b>{title}</b></button>
+                ))}
             </div>  
 
             <Modal isOpen={showNewModuleSection} onRequestClose={() => setShowNewModuleSection(false)} className="modal-container" overlayClassName="modal-overlay">
