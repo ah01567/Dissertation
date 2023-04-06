@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import '../Design/ModuleTicket.css';
 
-const ModuleButton = () => {
+const GeneralKnowledge = () => {
     return (
         <div>
             <div className='module-card'>
@@ -31,4 +31,4 @@ const ModuleButton = () => {
   }
   
 
-export default ModuleButton;
+export default GeneralKnowledge;
