@@ -1,11 +1,11 @@
 import React from 'react';
-import Login from './Login';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
+import Uploadmodulecontent from '../components/Uploadmodulecontent';
 
-const Home = () => {
-    const { currentUser, isAdmin, firebaseInitialized } = useAuth();
+const Module = () => {
+    const {firebaseInitialized } = useAuth();
 
     if (!firebaseInitialized) {
         return <Spinner />;
@@ -13,21 +13,15 @@ const Home = () => {
  
     return(
         <div>
-            {!currentUser ? (
-                <div><Login /></div>
-            ) : (            
-            <nav>
-                <div>
-                    <NavBar />
-                </div>      
-                
-                <div>
-                    {isAdmin && <p>I am an admin</p>}
-                </div>
-
-            </nav>)}
+            <div>
+                <NavBar />
+            </div>    
+            <div>
+                <h1>Arbic:</h1>
+                <Uploadmodulecontent />
+            </div>
         </div>
     )
 }
  
-export default Home
+export default Module;

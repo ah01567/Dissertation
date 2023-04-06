@@ -75,7 +75,7 @@ const Course = () => {
                 {isAdmin && <button className="module-btn"  onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
                 <button className="module-btn" > <b>General Knowledge</b></button> 
                 {moduleTitles.map(title => (
-                    <button className="module-btn" key={title} onClick={() => navigate(`/course/${title}`)} ><b>{title}</b></button>
+                    <button className="module-btn" key={title} onClick={() => navigate(`/course/${title}`, { state: { title } })} ><b>{title}</b></button>
                 ))}
             </div>  
 
@@ -88,7 +88,7 @@ const Course = () => {
                     setShowNewModuleSection(false);
                 }}>
                     <label>
-                        <h5>Module title:</h5> <Form.Control type="text" name="title" placeholder="Module name .."/>
+                        <h5>Module title:</h5> <Form.Control type="text" name="title" placeholder="Module name .." required/>
                     </label> <br/>
                     <label className="upload-img">
                         <h5>Module Image:</h5> <input type="file" name="image" accept="image/*" onChange={(e) => setImagePath(e.target.value)}/>
