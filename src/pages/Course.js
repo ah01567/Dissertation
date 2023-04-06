@@ -12,15 +12,16 @@ import Button from 'react-bootstrap/Button';
 import { db } from './firebase';
 import { useEffect } from 'react';
 import { onValue, off, ref, set } from 'firebase/database';
+import { useNavigate } from 'react-router-dom';
 
 
-const Home = () => {
+const Course = () => {
 
     const { currentUser, isAdmin, firebaseInitialized } = useAuth();
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
     const [imagePath, setImagePath] = useState('');
     const [moduleTitles, setModuleTitles] = useState([]);
-
+    const navigate = useNavigate();
     
     const addModule = (title, imagePath) => {
         const teacherID = currentUser.uid;
@@ -74,7 +75,7 @@ const Home = () => {
                 {isAdmin && <button className="module-btn"  onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
                 <button className="module-btn" > <b>General Knowledge</b></button> 
                 {moduleTitles.map(title => (
-                    <button className="module-btn" key={title}><b>{title}</b></button>
+                    <button className="module-btn" key={title} onClick={() => navigate(`/course/${title}`)} ><b>{title}</b></button>
                 ))}
             </div>  
 
@@ -106,4 +107,4 @@ const Home = () => {
     )
 }
  
-export default Home
+export default Course;
