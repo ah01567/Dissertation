@@ -21,7 +21,6 @@ const Home = () => {
     const [imagePath, setImagePath] = useState('');
     const [moduleTitles, setModuleTitles] = useState([]);
 
-
     
     const addModule = (title, imagePath) => {
         const teacherID = currentUser.uid;
