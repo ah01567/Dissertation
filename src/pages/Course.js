@@ -71,11 +71,11 @@ const Home = () => {
         <div>
             <div><NavBar/></div>    
 
-            <div className='module'>
-                {isAdmin && <button className="upload-btn" onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
-                <button className="upload-btn"> <b>General Knowledge</b></button> 
+            <div className='modules-container'>
+                {isAdmin && <button className="module-btn"  onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
+                <button className="module-btn" > <b>General Knowledge</b></button> 
                 {moduleTitles.map(title => (
-                    <button className="upload-btn" key={title}><b>{title}</b></button>
+                    <button className="module-btn" key={title}><b>{title}</b></button>
                 ))}
             </div>  
 
