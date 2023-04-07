@@ -35,13 +35,14 @@ function ColorSchemesExample() {
           <Navbar.Brand as={Link} to="/" className='NavLogoWithMargin' style={{fontSize: '1.5rem'}}>MyOnlyBook</Navbar.Brand>
             <Nav className="me-auto">
                 <Nav.Link as={Link} to="/" className='NavItemWithMargin'> <FaHome size={20}/> Home</Nav.Link>
-                <Nav.Link as={Link} to="/" className='NavItemWithMargin'> <FaBook/> Course</Nav.Link>
+                <Nav.Link as={Link} to="/course" className='NavItemWithMargin'> <FaBook/> Course</Nav.Link>
                 <Nav.Link as={Link} to="/" className='NavItemWithMargin'><FaRocketchat/> ChatBox</Nav.Link>
                 <Nav.Link as={Link} to="/" className='NavItemWithMargin'> <FaChartLine/> Progress</Nav.Link>
                 <Nav.Link as={Link} to="/" className='NavItemWithMargin'> <FaWpforms/> Feedback</Nav.Link>
                 <NavDropdown title="User" id="navbarScrollingDropdown" >
                     <NavDropdown.Item as={Link} to="/">Profile settings</NavDropdown.Item>
-                    {isAdmin && <NavDropdown.Item as={Link} to="/">MyStudents List</NavDropdown.Item> }
+                    {isAdmin && <NavDropdown.Item as={Link} to="/mystudents">MyStudents List</NavDropdown.Item> }
+                    {!isAdmin && <NavDropdown.Item as={Link} to="/">My modules</NavDropdown.Item> }
                     <NavDropdown.Item as={Link} to="/">Privacy policy</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/">Contact Us</NavDropdown.Item>
                     <NavDropdown.Divider />
