@@ -2,7 +2,8 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
-import Uploadmodulecontent from '../components/Uploadmodulecontent';
+import ModuleTicket from '../components/ModuleTicket';
+import Button from 'react-bootstrap/Button';
 
 const Module = () => {
     const {firebaseInitialized } = useAuth();
@@ -18,7 +19,9 @@ const Module = () => {
             </div>    
             <div>
                 <h1>Arbic:</h1>
-                <Uploadmodulecontent />
+                <Button variant="danger">Delete module</Button> {''}
+                <Button variant="success">Add content section</Button>
+                <ModuleTicket />
             </div>
         </div>
     )

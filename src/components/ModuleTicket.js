@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import useAuth from "../pages/CurrentUser";
 import '../Design/Course.css';
 
-const NavTabsExample = () => {
+const ModuleTicket = () => {
 
         const { isAdmin } = useAuth();
         const [fileUrl, setFileUrl] = useState('');
@@ -47,4 +47,4 @@ const NavTabsExample = () => {
   );
 }
 
-export default NavTabsExample;
+export default ModuleTicket;
