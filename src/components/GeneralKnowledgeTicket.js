@@ -22,8 +22,7 @@ const GeneralKnowledge = () => {
     }, [resultAvailable]);
 
     return (
-        <div>
-            <div className='module-card'>
+        <div className='module-card'>
             <Card>
                 <div className='module-title'><h2>General Knowledge</h2></div>
                 <Card.Body className='module-intro'><h5>On your <b>free time</b>, expand your Knowledge by exploring the following fun tools:</h5></Card.Body>
@@ -81,7 +80,6 @@ const GeneralKnowledge = () => {
                 </div>
             </Card>
             </div>
-        </div>
     );
   }
 
