@@ -21,6 +21,7 @@ const Course = () => {
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
     const [imagePath, setImagePath] = useState('');
     const [moduleTitles, setModuleTitles] = useState([]);
+    const [error, setError] = useState(''); 
     const navigate = useNavigate();
     
     const addModule = (title, imagePath) => {
@@ -30,8 +31,19 @@ const Course = () => {
           title: title,
           image: imagePath,
         };
-        set(modulesRef, moduleData);
-    };
+        // Check if the module already exists
+        const existingModule = moduleTitles.find((module) => module.toLowerCase() === title.toLowerCase());
+        if (existingModule) {
+          // If the module already exists, set the error message state variable
+          setError('Module already exists');
+          setShowNewModuleSection(true);
+        } else {
+          // If the module does not exist, add it to the database
+          set(modulesRef, moduleData);
+          setShowNewModuleSection(false);
+          setError(false);
+        }
+      };
 
     useEffect(() => {
         // Listen for changes to the Modules collection in the realtime database
@@ -81,11 +93,11 @@ const Course = () => {
 
             <Modal isOpen={showNewModuleSection} onRequestClose={() => setShowNewModuleSection(false)} className="modal-container" overlayClassName="modal-overlay">
                 <h2>Create New Module</h2>
+                {error && <p className="error-message" style={{color: 'red'}}>{error}</p>}
                 <Form onSubmit={(event) => {
                     event.preventDefault();
                     const title = event.target.elements.title.value;
                     addModule(title, imagePath);
-                    setShowNewModuleSection(false);
                 }}>
                     <label>
                         <h5>Module title:</h5> <Form.Control type="text" name="title" placeholder="Module name .." required/>
@@ -94,7 +106,7 @@ const Course = () => {
                         <h5>Module Image:</h5> <input type="file" name="image" accept="image/*" onChange={(e) => setImagePath(e.target.value)}/>
                     </label>
                     <div className="button-group">
-                        <Button className='cancel-btn' variant="danger" onClick={() => setShowNewModuleSection(false)}>Cancel</Button>
+                        <Button className='cancel-btn' variant="danger" onClick={() => {setShowNewModuleSection(false); setError();}}>Cancel</Button>
                         <Button className='add-btn' variant="success" type="submit">Add Module</Button>
                     </div>
                 </Form>
