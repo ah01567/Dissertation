@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
 import useAuth from "../pages/CurrentUser";
-import '../Design/ModuleTicket.css';
+import '../Design/Course.css';
 
 const NavTabsExample = () => {
 

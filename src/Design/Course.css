@@ -58,3 +58,19 @@
     margin-top: 20px;
     margin-left: 40px;
   }
+  .country-search-title{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .country-search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .country-search-result{
+    margin-left: 200px;
+    margin-top: 20px;
+    font-size: 20px;
+  }

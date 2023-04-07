@@ -4,7 +4,7 @@ import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
 import GeneralKnowledgeTicket from '../components/GeneralKnowledgeTicket';
 import { FaPlus } from 'react-icons/fa';
-import '../Design/ModuleTicket.css';
+import '../Design/Course.css';
 import Modal from 'react-modal';
 import '../Design/Modal.css';
 import Form from 'react-bootstrap/Form';
