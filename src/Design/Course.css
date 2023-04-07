@@ -38,8 +38,12 @@
     margin-right: 20px;
     width: 200px;
     height: 250px;
+    color: white;
     background-color: #fdfdfd;
     border-radius: 20px;   
+    background-image: url("/Users/ahmedhenine/Desktop/myonlybook/src/img/module.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .module-btn:hover {
