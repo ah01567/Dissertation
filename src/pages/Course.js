@@ -6,7 +6,7 @@ import GeneralKnowledgeTicket from '../components/GeneralKnowledgeTicket';
 import { FaPlus } from 'react-icons/fa';
 import '../Design/Course.css';
 import Modal from 'react-modal';
-import '../Design/Modal.css';
+import '../Design/Course.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { db } from './firebase';
@@ -112,7 +112,7 @@ const Course = () => {
                 </Form>
             </Modal>
 
-            <div className='module-tickets'>
+            <div>
                 <GeneralKnowledgeTicket/>
             </div>
         </div>

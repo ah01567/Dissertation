@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
-import ModuleTicket from '../components/UploadLesson';
+import UploadLesson from '../components/UploadLesson';
 import Button from 'react-bootstrap/Button';
 
 const Module = () => {
@@ -21,7 +21,7 @@ const Module = () => {
                 <h1>Arbic:</h1>
                 <Button variant="danger">Delete module</Button> {''}
                 <Button variant="success">Add content section</Button>
-                <ModuleTicket />
+                <UploadLesson />
             </div>
         </div>
     )

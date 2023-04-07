@@ -22,8 +22,8 @@ const GeneralKnowledge = () => {
     }, [resultAvailable]);
 
     return (
-        <div className='module-card'>
-            <Card>
+        <div >
+            <Card className='module-card' style={{width: '100%', margin: 0}}> 
                 <div className='module-title'><h2>General Knowledge</h2></div>
                 <Card.Body className='module-intro'><h5>On your <b>free time</b>, expand your Knowledge by exploring the following fun tools:</h5></Card.Body>
                 <div className='module-intro'><h5>Learn about the world's countries using the map and the search bar below:</h5></div>
@@ -31,20 +31,7 @@ const GeneralKnowledge = () => {
                 <div className='module-content'>
                 <Card>
                     <Card.Body className='country-props'>
-                        <div >
-                            <LoadScript
-                            googleMapsApiKey="AIzaSyA5FmLP2cYqNQH8hEtmp3-r6_U7hjFHTI4"
-                            >
-                            <GoogleMap 
-                                mapContainerStyle={{ height: "400px", width: "100%" }}
-                                center={{ lat: 30.397, lng: 30.144 }}
-                                zoom={3.2}
-                            >
-                            <Marker position={algeriaLocation} />
-                            </GoogleMap>
-                            </LoadScript>
-                        </div>
-                            <h3 class='country-search-title'>Country search: </h3> 
+                    <h3 class='country-search-title'>Country search: </h3> 
                             <div className='country-search-bar'><Form.Control type="text" placeholder="Search for any country of your choice ..." style={{width: "60%"}}   value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/> 
                             <Button
                                 variant="outline-secondary"
@@ -74,12 +61,25 @@ const GeneralKnowledge = () => {
                                     <li><b>Population:</b> {countryInfo?.population}</li>
                                     </lu> 
                                 </div>   
-                            )}                 
+                            )} <br/><br/>
+                        <div >
+                            <LoadScript
+                            googleMapsApiKey="AIzaSyA5FmLP2cYqNQH8hEtmp3-r6_U7hjFHTI4"
+                            >
+                            <GoogleMap 
+                                mapContainerStyle={{ height: "400px", width: "100%" }}
+                                center={{ lat: 30.397, lng: 30.144 }}
+                                zoom={3.2}
+                            >
+                            <Marker position={algeriaLocation} />
+                            </GoogleMap>
+                            </LoadScript>
+                        </div>                
                     </Card.Body>
                 </Card>
                 </div>
             </Card>
-            </div>
+        </div>
     );
   }
 
