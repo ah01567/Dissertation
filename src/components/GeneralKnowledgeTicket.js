@@ -30,7 +30,7 @@ const GeneralKnowledge = () => {
 
                 <div className='module-content'>
                 <Card>
-                    <Card.Body className='country-props'>
+                    <Card.Body>
                     <h3 class='country-search-title'>Country search: </h3> 
                             <div className='country-search-bar'><Form.Control type="text" placeholder="Search for any country of your choice ..." style={{width: "60%"}}   value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/> 
                             <Button
