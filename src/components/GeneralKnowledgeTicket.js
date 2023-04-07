@@ -26,8 +26,8 @@ const GeneralKnowledge = () => {
             <div className='module-card'>
             <Card>
                 <div className='module-title'><h2>General Knowledge</h2></div>
-                <Card.Body className='module-intro'><h5>On your <b>free time</b>, expand your Knowledge by exploring the following fun tools</h5></Card.Body>
-                <div className='module-intro'><h5>Learn about the world's countries using the map below:</h5></div>
+                <Card.Body className='module-intro'><h5>On your <b>free time</b>, expand your Knowledge by exploring the following fun tools:</h5></Card.Body>
+                <div className='module-intro'><h5>Learn about the world's countries using the map and the search bar below:</h5></div>
 
                 <div className='module-content'>
                 <Card>
