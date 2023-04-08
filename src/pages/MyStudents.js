@@ -1,4 +1,4 @@
-import React, { useState, usersRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import useAuth from "./CurrentUser";
 import '../Design/MyStudents.css';
 import NavBar from '../components/NavBar';
@@ -12,9 +12,21 @@ const MyStudents = () => {
   const { currentUser, isAdmin, firebaseInitialized } = useAuth();
   const [students, setStudents] = useState([]);
 
-  if (!firebaseInitialized) {
-    return <Spinner />;
-  }
+  useEffect(() => {
+    if (firebaseInitialized) {
+      const teacherId = currentUser.uid;
+      const dbRef = ref(getDatabase(), `MyStudents/${teacherId}`);
+      onValue(dbRef, (snapshot) => {
+        const studentsData = snapshot.val() || {};
+        const studentsList = Object.values(studentsData).map((student) => ({
+          id: student.id,
+          fname: student.fname,
+          lname: student.lname,
+        }));
+        setStudents(studentsList);
+      });
+    }
+  }, [currentUser, firebaseInitialized]);
 
   const handleAddStudent = () => {
     //const [studentId, setstudentId] = useState('');
@@ -22,7 +34,11 @@ const MyStudents = () => {
     const dbRef = ref(getDatabase(), 'Users');
     onValue(dbRef, (snapshot) => {
       const users = snapshot.val();
-      const matchingUser = Object.values(users).find(user => user.email === email);
+      const matchingUser = Object.values(users).find(user => user.email === email && user.role === 'STUDENT');
+      if (!matchingUser) {
+        alert('This student is not registered.');
+        return;
+      }
       const studentId = Object.keys(users).find(key => users[key] === matchingUser);
       const teacherId = currentUser.uid; 
       const MystudentsDB = ref(getDatabase(), `MyStudents/${teacherId}/${studentId}`);
@@ -30,11 +46,15 @@ const MyStudents = () => {
       if (matchingUser) {
         {isAdmin && 
         set(MystudentsDB,studentData );
-        setStudents(prevStudents => [...prevStudents, matchingUser]); }
+        }
       }
     });
   }
 
+  if (!firebaseInitialized) {
+    return <Spinner />;
+  }
+  
   return (
     <div>
       <NavBar />
