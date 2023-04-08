@@ -85,7 +85,6 @@ const Course = () => {
 
             <div className='modules-container'>
                 {isAdmin && <button className="module-btn"  onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
-                <button className="module-btn" > <b>General Knowledge</b></button> 
                 {moduleTitles.map(title => (
                     <button className="module-btn" key={title} onClick={() => navigate(`/course/${title}`, { state: { title } })} ><b>{title}</b></button>
                 ))}
