@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import Course from './pages/Course';
 import Module from './pages/Module';
 import MyStudents from './pages/MyStudents';
-import MyModules from './pages/MyModules';
 import { BrowserRouter as Router} from 'react-router-dom';
 import {Routes, Route} from 'react-router-dom';
  
@@ -21,7 +20,6 @@ function App() {
                <Route path="/course" element={<Course />}/>
                <Route path="/course/:moduleTitle" element={<Module/>}/>
                <Route path="/mystudents" element={<MyStudents />}/>
-               <Route path="/mymodules" element={<MyModules />}/>
             </Routes>               
         </section>
       </div>

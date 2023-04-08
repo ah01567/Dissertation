@@ -42,7 +42,6 @@ function ColorSchemesExample() {
                 <NavDropdown title="User" id="navbarScrollingDropdown" >
                     <NavDropdown.Item as={Link} to="/">Profile settings</NavDropdown.Item>
                     {isAdmin && <NavDropdown.Item as={Link} to="/mystudents">MyStudents List</NavDropdown.Item> }
-                    {!isAdmin && <NavDropdown.Item as={Link} to="/mymodules">My modules</NavDropdown.Item> }
                     <NavDropdown.Item as={Link} to="/">Privacy policy</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/">Contact Us</NavDropdown.Item>
                     <NavDropdown.Divider />
