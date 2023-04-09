@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Card from 'react-bootstrap/Card';
 import '../Design/Course.css';
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
@@ -15,11 +15,6 @@ const GeneralKnowledge = () => {
     const [countryInfo, setCountryInfo] = useState(null);
     const [resultAvailable, setResultAvailable] = useState(false);
 
-    useEffect(() => {
-        if (resultAvailable) {
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-    }, [resultAvailable]);
 
     return (
         <div >
