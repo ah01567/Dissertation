@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
@@ -10,8 +10,7 @@ import '../Design/Course.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { db } from './firebase';
-import { useEffect } from 'react';
-import { onValue, off, ref, set } from 'firebase/database';
+import { onValue, off, get, ref, set } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -31,6 +30,9 @@ const Course = () => {
           title: title,
           image: imagePath,
         };
+
+        const myStudentsRef = ref(db, `MyStudents/${teacherID}`);
+
         // Check if the module already exists
         const existingModule = moduleTitles.find((module) => module.toLowerCase() === title.toLowerCase());
         if (existingModule) {
@@ -40,6 +42,16 @@ const Course = () => {
         } else {
           // If the module does not exist, add it to the database
           set(modulesRef, moduleData);
+          get(myStudentsRef).then((snapshot) => {
+            const myStudents = snapshot.val();
+            if (myStudents) {
+              // For each student, add the module to their StudentModules collection
+              Object.keys(myStudents).forEach((studentID) => {
+                const studentModulesRef = ref(db, `StudentModules/${studentID}/${title}`);
+                set(studentModulesRef, moduleData);
+              });
+            }
+          });
           setShowNewModuleSection(false);
           setError(false);
         }
