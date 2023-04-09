@@ -26,7 +26,7 @@ const Course = () => {
     
     const addModule = (title, imagePath) => {
         const teacherID = currentUser.uid;
-        const modulesRef = ref(db, `Modules/${teacherID}/${title}`);
+        const modulesRef = ref(db, `TeacherModules/${teacherID}/${title}`);
         const moduleData = {
           title: title,
           image: imagePath,
@@ -47,7 +47,7 @@ const Course = () => {
 
     useEffect(() => {
         // Listen for changes to the Modules collection in the realtime database
-        const modulesRef = ref(db, 'Modules');
+        const modulesRef = ref(db, 'TeacherModules');
         if (modulesRef) {
           onValue(modulesRef, (snapshot) => {
             const modulesData = snapshot.val();
