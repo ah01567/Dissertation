@@ -20,9 +20,13 @@ const Course = () => {
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
     const [imagePath, setImagePath] = useState('');
     const [moduleTitles, setModuleTitles] = useState([]);
+    const [newStudents, setNewStudents] = useState([]);
     const [error, setError] = useState(''); 
     const navigate = useNavigate();
     
+    //When Teacher adds a module, check if it exists already. If so, raise an Error
+    // Otherwise, add it to 'TeacherModules' DB
+    // Then add that module to my students in 'StudentModules' db
     const addModule = (title, imagePath) => {
         const teacherID = currentUser.uid;
         const modulesRef = ref(db, `TeacherModules/${teacherID}/${title}`);
@@ -57,39 +61,88 @@ const Course = () => {
         }
       };
 
-    useEffect(() => {
-        // Listen for changes to the Modules collection in the realtime database
-        const modulesRef = ref(db, 'TeacherModules');
-        if (modulesRef) {
-          onValue(modulesRef, (snapshot) => {
-            const modulesData = snapshot.val();
-            if (modulesData) {
-              // Convert the modules data to an array of objects with title and id properties
-              const modulesList = Object.keys(modulesData).map((teacherID) => {
-                const teacherModules = modulesData[teacherID];
-                return Object.keys(teacherModules).map((title) => {
-                  return {
-                    id: `${teacherID}-${title}`,
-                    title,
-                  };
-                });
-              }).flat();
-              setModuleTitles(modulesList.map(module => module.title));
-            }
-          });
-        }
-        // Cleanup function to remove the listener when the component unmounts
-        return () => {
+      // Listen to 'eacherModule' DB changes, when a module is added ...
+      // Add them to moduleTitles to display them later on the Course page
+      useEffect(() => {
+          // Listen for changes to the Modules collection in the realtime database
+          const modulesRef = ref(db, 'TeacherModules');
           if (modulesRef) {
-            off(modulesRef);
+            onValue(modulesRef, (snapshot) => {
+              const modulesData = snapshot.val();
+              if (modulesData) {
+                // Convert the modules data to an array of objects with title and id properties
+                const modulesList = Object.keys(modulesData).map((teacherID) => {
+                  const teacherModules = modulesData[teacherID];
+                  return Object.keys(teacherModules).map((title) => {
+                    return {
+                      id: `${teacherID}-${title}`,
+                      title,
+                    };
+                  });
+                }).flat();
+                setModuleTitles(modulesList.map(module => module.title));
+              }
+            });
           }
-        };
-      }, []);
+          // Cleanup function to remove the listener when the component unmounts
+          return () => {
+            if (modulesRef) {
+              off(modulesRef);
+            }
+          };
+        }, []);
 
-      
-    if (!firebaseInitialized) {
-        return <Spinner />;
-      }
+        // Listen to 'MyStudents' DB, if a student is added ...
+        // We fetch all modules of the current teacher on 'TeacherModules/teacherID' DB
+        // then we go to 'StudentModules/StudentID' then we save those modules
+        // useEffect(() => {
+        //   const studentsRef = ref(db, 'MyStudents');
+        //   if (studentsRef) {
+        //     onValue(studentsRef, (snapshot) => {
+        //       const studentAdded = snapshot.val();
+        //       if (studentAdded) {
+        //         Object.keys(studentAdded).forEach((teacherID) => {
+        //           const teacherNewStudents = studentAdded[teacherID];
+        //           Object.keys(teacherNewStudents).forEach((student) => {
+        //             const studentID = `${teacherID}-${student}`;
+        //             const studentModulesRef = ref(db, `StudentsModules/${studentID}`);
+        //             const teacherModulesRef = ref(db, `TeacherModules/${teacherID}`);
+        
+        //             // Add the student to the StudentsModules database
+        //             set(studentModulesRef, {
+        //               student: studentID,
+        //             });
+        
+        //             // Fetch all modules for the teacher
+        //             onValue(teacherModulesRef, (snapshot) => {
+        //               const teacherModules = snapshot.val();
+        //               if (teacherModules) {
+        //                 const moduleIDs = Object.keys(teacherModules);
+        
+        //                 // Add all modules to the student's record
+        //                 moduleIDs.forEach((moduleID) => {
+        //                   const moduleRef = ref(db, `StudentsModules/${studentID}/modules/${moduleID}`);
+        //                   set(moduleRef, true);
+        //                 });
+        //               }
+        //             });
+        //           });
+        //         });
+        //       }
+        //     });
+        //   }
+          
+        //   return () => {
+        //     if (studentsRef) {
+        //       off(studentsRef);
+        //     }
+        //   };
+        // }, []);
+        
+
+        if (!firebaseInitialized) {
+            return <Spinner />;
+          }
       
     return(       
         <div>
