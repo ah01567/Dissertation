@@ -20,7 +20,6 @@ const Course = () => {
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
     const [imagePath, setImagePath] = useState('');
     const [moduleTitles, setModuleTitles] = useState([]);
-    const [newStudents, setNewStudents] = useState([]);
     const [error, setError] = useState(''); 
     const navigate = useNavigate();
     
@@ -92,53 +91,6 @@ const Course = () => {
           };
         }, []);
 
-        // Listen to 'MyStudents' DB, if a student is added ...
-        // We fetch all modules of the current teacher on 'TeacherModules/teacherID' DB
-        // then we go to 'StudentModules/StudentID' then we save those modules
-        // useEffect(() => {
-        //   const studentsRef = ref(db, 'MyStudents');
-        //   if (studentsRef) {
-        //     onValue(studentsRef, (snapshot) => {
-        //       const studentAdded = snapshot.val();
-        //       if (studentAdded) {
-        //         Object.keys(studentAdded).forEach((teacherID) => {
-        //           const teacherNewStudents = studentAdded[teacherID];
-        //           Object.keys(teacherNewStudents).forEach((student) => {
-        //             const studentID = `${teacherID}-${student}`;
-        //             const studentModulesRef = ref(db, `StudentsModules/${studentID}`);
-        //             const teacherModulesRef = ref(db, `TeacherModules/${teacherID}`);
-        
-        //             // Add the student to the StudentsModules database
-        //             set(studentModulesRef, {
-        //               student: studentID,
-        //             });
-        
-        //             // Fetch all modules for the teacher
-        //             onValue(teacherModulesRef, (snapshot) => {
-        //               const teacherModules = snapshot.val();
-        //               if (teacherModules) {
-        //                 const moduleIDs = Object.keys(teacherModules);
-        
-        //                 // Add all modules to the student's record
-        //                 moduleIDs.forEach((moduleID) => {
-        //                   const moduleRef = ref(db, `StudentsModules/${studentID}/modules/${moduleID}`);
-        //                   set(moduleRef, true);
-        //                 });
-        //               }
-        //             });
-        //           });
-        //         });
-        //       }
-        //     });
-        //   }
-          
-        //   return () => {
-        //     if (studentsRef) {
-        //       off(studentsRef);
-        //     }
-        //   };
-        // }, []);
-        
 
         if (!firebaseInitialized) {
             return <Spinner />;
