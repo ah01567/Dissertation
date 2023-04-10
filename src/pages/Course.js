@@ -35,6 +35,7 @@ const Course = () => {
         };
 
         const myStudentsRef = ref(db, `MyStudents/${teacherID}`);
+        const addModuleToStudent = ref(db, `StudentModules/${teacherID}/${title}`);
 
         // Check if the module already exists
         const existingModule = moduleTitles.find((module) => module.toLowerCase() === title.toLowerCase());
@@ -45,16 +46,17 @@ const Course = () => {
         } else {
           // If the module does not exist, add it to the database
           set(modulesRef, moduleData);
-          get(myStudentsRef).then((snapshot) => {
-            const myStudents = snapshot.val();
-            if (myStudents) {
-              // For each student, add the module to their StudentModules collection
-              Object.keys(myStudents).forEach((studentID) => {
-                const studentModulesRef = ref(db, `StudentModules/${studentID}/${title}`);
-                set(studentModulesRef, moduleData);
-              });
-            }
-          });
+          set(addModuleToStudent, moduleData);
+          // get(myStudentsRef).then((snapshot) => {
+          //   const myStudents = snapshot.val();
+          //   if (myStudents) {
+          //     // For each student, add the module to their StudentModules collection
+          //     Object.keys(myStudents).forEach((studentID) => {
+          //       const studentModulesRef = ref(db, `StudentModules/${studentID}/${title}`);
+          //       set(studentModulesRef, moduleData);
+          //     });
+          //   }
+          // });
           setShowNewModuleSection(false);
           setError(false);
         }
