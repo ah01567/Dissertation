@@ -98,31 +98,47 @@ const Course = () => {
           };
         }, []);
 
-        useEffect(() => {
-          // Set the reference to the correct database based on whether the user is an admin or not
-          const userID = currentUser?.uid;
-          const modulesRef = isAdmin
-            ? ref(db, `TeacherModules/${userID}`)
-            : ref(db, `StudentModules/${userID}`);
+        // useEffect(() => {
+        //   // Set the reference to the correct database based on whether the user is an admin or not
+        //   const userID = currentUser?.uid;
+        //   const modulesRef = isAdmin
+        //     ? ref(db, `TeacherModules/${userID}`)
+        //     : ref(db, `StudentModules/${userID}`);
       
-          // Attach a listener to the database reference to retrieve the module titles
+        //   // Attach a listener to the database reference to retrieve the module titles
+        //   onValue(modulesRef, (snapshot) => {
+        //     if (snapshot.exists()) {
+        //       // If the data exists, retrieve the module titles and set them in state
+        //       const moduleTitlesObject = snapshot.val();
+        //       const moduleTitlesArray = Object.keys(moduleTitlesObject);
+        //       setDisplayedModules(moduleTitlesArray);
+        //     } else {
+        //       // If the data doesn't exist, clear the module titles from state
+        //       setDisplayedModules([]);
+        //     }
+        //   });
+      
+        //   // Detach the listener when the component unmounts
+        //   return () => {
+        //     off(modulesRef);
+        //   };
+        // }, []);
+        useEffect(() => {
+          const userID = currentUser?.uid;
+          const modulesRef = isAdmin ? ref(db, `TeacherModules/${userID}`)
+                                     : ref(db, `StudentModules/${userID}`);
+          
           onValue(modulesRef, (snapshot) => {
             if (snapshot.exists()) {
-              // If the data exists, retrieve the module titles and set them in state
-              const moduleTitlesObject = snapshot.val();
-              const moduleTitlesArray = Object.keys(moduleTitlesObject);
-              setDisplayedModules(moduleTitlesArray);
+               const moduleTitlesObject = snapshot.val();
+               const moduleTitlesArray = Object.keys(moduleTitlesObject);
+               setDisplayedModules(moduleTitlesArray);
             } else {
               // If the data doesn't exist, clear the module titles from state
-              setDisplayedModules([]);
-            }
-          });
-      
-          // Detach the listener when the component unmounts
-          return () => {
-            off(modulesRef);
-          };
-        }, []);
+                setDisplayedModules([]);
+              }
+          })
+        })
 
         if (!firebaseInitialized) {
             return <Spinner />;
