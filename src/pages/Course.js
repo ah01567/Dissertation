@@ -20,6 +20,7 @@ const Course = () => {
     const [showNewModuleSection, setShowNewModuleSection] = useState(false);
     const [imagePath, setImagePath] = useState('');
     const [moduleTitles, setModuleTitles] = useState([]);
+    const [displayedModules, setDisplayedModules] = useState([]);
     const [error, setError] = useState(''); 
     const navigate = useNavigate();
     
@@ -34,8 +35,10 @@ const Course = () => {
           image: imagePath,
         };
 
-        const myStudentsRef = ref(db, `MyStudents/${teacherID}`);
-        const addModuleToStudent = ref(db, `StudentModules/${teacherID}/${title}`);
+        const myStudentsRef = ref(db, `MyStudents`);
+        let isMyStudentsEmpty = true;
+
+        const StudentmodulesStudents = ref(db, `StudentModules`); 
 
         // Check if the module already exists
         const existingModule = moduleTitles.find((module) => module.toLowerCase() === title.toLowerCase());
@@ -46,7 +49,19 @@ const Course = () => {
         } else {
           // If the module does not exist, add it to the database
           set(modulesRef, moduleData);
-          set(addModuleToStudent, moduleData);
+          // Check if 'StudentModules' db exists. If yes, add this modules to each student there
+          const studentModulesRef = ref(db, 'StudentModules');
+          get(studentModulesRef).then((snapshot) => {
+            if (snapshot.exists()) {
+              // If the database exists, add the module to each student in the database
+              const student = snapshot.val();
+              for (const studentID in student) {
+                const studentRef = ref(db, `StudentModules/${studentID}/${title}`);
+                set(studentRef, moduleData);
+              }
+            }
+          });
+
           setShowNewModuleSection(false);
           setError(false);
         }
@@ -83,6 +98,31 @@ const Course = () => {
           };
         }, []);
 
+        useEffect(() => {
+          // Set the reference to the correct database based on whether the user is an admin or not
+          const userID = currentUser?.uid;
+          const modulesRef = isAdmin
+            ? ref(db, `TeacherModules/${userID}`)
+            : ref(db, `StudentModules/${userID}`);
+      
+          // Attach a listener to the database reference to retrieve the module titles
+          onValue(modulesRef, (snapshot) => {
+            if (snapshot.exists()) {
+              // If the data exists, retrieve the module titles and set them in state
+              const moduleTitlesObject = snapshot.val();
+              const moduleTitlesArray = Object.keys(moduleTitlesObject);
+              setDisplayedModules(moduleTitlesArray);
+            } else {
+              // If the data doesn't exist, clear the module titles from state
+              setDisplayedModules([]);
+            }
+          });
+      
+          // Detach the listener when the component unmounts
+          return () => {
+            off(modulesRef);
+          };
+        }, []);
 
         if (!firebaseInitialized) {
             return <Spinner />;
@@ -94,7 +134,7 @@ const Course = () => {
 
             <div className='modules-container'>
                 {isAdmin && <button className="module-btn"  onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
-                {moduleTitles.map(title => (
+                {displayedModules.map(title => (
                     <button className="module-btn" key={title} onClick={() => navigate(`/course/${title}`, { state: { title } })} ><b>{title}</b></button>
                 ))}
             </div>  

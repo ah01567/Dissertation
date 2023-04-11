@@ -48,7 +48,21 @@ const MyStudents = () => {
         set(MystudentsDB,studentData );
         }
       }
+      const teacherModulesRef = ref(getDatabase(), `TeacherModules/${currentUser.uid}`);
+      onValue(teacherModulesRef, (snapshot) => {
+        const modules = snapshot.val();
+        if (modules) {         
+          for (const [title, moduleData] of Object.entries(modules)) {
+            const studentModulesRef = ref(getDatabase(), `StudentModules/${studentId}/${title}`);
+            set(studentModulesRef, {
+              ...moduleData,
+              title,
+            });
+          }
+        }
+      });
     });
+    setStudents("");
   }
 
   if (!firebaseInitialized) {
