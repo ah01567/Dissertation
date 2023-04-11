@@ -21,6 +21,7 @@ const Course = () => {
     const [imagePath, setImagePath] = useState('');
     const [moduleTitles, setModuleTitles] = useState([]);
     const [displayedModules, setDisplayedModules] = useState([]);
+    const [myStudents, setMyStudents] = useState([]);
     const [error, setError] = useState(''); 
     const navigate = useNavigate();
     
@@ -35,11 +36,6 @@ const Course = () => {
           image: imagePath,
         };
 
-        const myStudentsRef = ref(db, `MyStudents`);
-        let isMyStudentsEmpty = true;
-
-        const StudentmodulesStudents = ref(db, `StudentModules`); 
-
         // Check if the module already exists
         const existingModule = moduleTitles.find((module) => module.toLowerCase() === title.toLowerCase());
         if (existingModule) {
@@ -49,6 +45,18 @@ const Course = () => {
         } else {
           // If the module does not exist, add it to the database
           set(modulesRef, moduleData);
+          // Get all MyStudents and push them in a list
+          const myStudentsRef = ref(db, `MyStudents/${teacherID}/`);
+          onValue(myStudentsRef, (snapshot) => {
+          const studentsObj = snapshot.val();
+            if (studentsObj) {
+              const studentsArr = Object.values(studentsObj);
+              setMyStudents(studentsArr);
+            } else {
+              setMyStudents([]);
+            }
+        });
+
           // Check if 'StudentModules' db exists. If yes, add this modules to each student there
           const studentModulesRef = ref(db, 'StudentModules');
           get(studentModulesRef).then((snapshot) => {
@@ -56,8 +64,12 @@ const Course = () => {
               // If the database exists, add the module to each student in the database
               const student = snapshot.val();
               for (const studentID in student) {
+              // Check if studentID exists in myStudents list
+              const studentExists = myStudents.some((s) => s.id === studentID);
+              if (studentExists) {
                 const studentRef = ref(db, `StudentModules/${studentID}/${title}`);
                 set(studentRef, moduleData);
+              }
               }
             }
           });
@@ -98,31 +110,6 @@ const Course = () => {
           };
         }, []);
 
-        // useEffect(() => {
-        //   // Set the reference to the correct database based on whether the user is an admin or not
-        //   const userID = currentUser?.uid;
-        //   const modulesRef = isAdmin
-        //     ? ref(db, `TeacherModules/${userID}`)
-        //     : ref(db, `StudentModules/${userID}`);
-      
-        //   // Attach a listener to the database reference to retrieve the module titles
-        //   onValue(modulesRef, (snapshot) => {
-        //     if (snapshot.exists()) {
-        //       // If the data exists, retrieve the module titles and set them in state
-        //       const moduleTitlesObject = snapshot.val();
-        //       const moduleTitlesArray = Object.keys(moduleTitlesObject);
-        //       setDisplayedModules(moduleTitlesArray);
-        //     } else {
-        //       // If the data doesn't exist, clear the module titles from state
-        //       setDisplayedModules([]);
-        //     }
-        //   });
-      
-        //   // Detach the listener when the component unmounts
-        //   return () => {
-        //     off(modulesRef);
-        //   };
-        // }, []);
         useEffect(() => {
           const userID = currentUser?.uid;
           const modulesRef = isAdmin ? ref(db, `TeacherModules/${userID}`)
