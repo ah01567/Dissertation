@@ -1,0 +1,16 @@
+.card-search {
+    width: 90%;
+    margin-top: 50px;
+    margin-left: 80px;
+  }
+  .mystudents-search-title{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
