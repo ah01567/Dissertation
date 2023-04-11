@@ -69,6 +69,7 @@ const Course = () => {
               if (studentExists) {
                 const studentRef = ref(db, `StudentModules/${studentID}/${title}`);
                 set(studentRef, moduleData);
+                setMyStudents([]);
               }
               }
             }

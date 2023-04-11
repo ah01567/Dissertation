@@ -12,22 +12,6 @@ const MyStudents = () => {
   const { currentUser, isAdmin, firebaseInitialized } = useAuth();
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    if (firebaseInitialized) {
-      const teacherId = currentUser.uid;
-      const dbRef = ref(getDatabase(), `MyStudents/${teacherId}`);
-      onValue(dbRef, (snapshot) => {
-        const studentsData = snapshot.val() || {};
-        const studentsList = Object.values(studentsData).map((student) => ({
-          id: student.id,
-          fname: student.fname,
-          lname: student.lname,
-        }));
-        setStudents(studentsList);
-      });
-    }
-  }, [currentUser, firebaseInitialized]);
-
   const handleAddStudent = () => {
     //const [studentId, setstudentId] = useState('');
     const email = document.getElementById('student-email').value;
@@ -64,6 +48,23 @@ const MyStudents = () => {
     });
     setStudents("");
   }
+
+  useEffect(() => {
+    if (firebaseInitialized) {
+      const teacherId = currentUser.uid;
+      const dbRef = ref(getDatabase(), `MyStudents/${teacherId}`);
+      onValue(dbRef, (snapshot) => {
+        const studentsData = snapshot.val() || {};
+        const studentsList = Object.values(studentsData).map((student) => ({
+          id: student.id,
+          fname: student.fname,
+          lname: student.lname,
+        }));
+        setStudents(studentsList);
+      });
+    }
+  }, [currentUser, firebaseInitialized]);
+  
 
   if (!firebaseInitialized) {
     return <Spinner />;
