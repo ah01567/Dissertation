@@ -20,7 +20,7 @@ const MyStudents = () => {
       const users = snapshot.val();
       const matchingUser = Object.values(users).find(user => user.email === email && user.role === 'STUDENT');
       if (!matchingUser) {
-        alert('This student is not registered.');
+        alert('This student is not registered ! Please double check the user Email');
         return;
       }
       const studentId = Object.keys(users).find(key => users[key] === matchingUser);

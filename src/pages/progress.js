@@ -14,52 +14,45 @@ import '../Design/progress.css';
 const MyStudents = () => {
   const { currentUser, isAdmin, firebaseInitialized } = useAuth();
   const [myModules, setMyModules] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const [test1Semester1, setTest1Semester1] = useState('');
-  const [test1Semester2, setTest1Semester2] = useState('');
-  const [test1Semester3, setTest1Semester3] = useState('');
-  const [test2Semester1, setTest2Semester1] = useState('');
-  const [test2Semester2, setTest2Semester2] = useState('');
-  const [test2Semester3, setTest2Semester3] = useState('');
-  const [examSemester1, setExamSemester1] = useState('');
-  const [examSemester2, setExamSemester2] = useState('');
-  const [examSemester3, setExamSemester3] = useState('');
-
-  useEffect(() => {
-    if (currentUser) {
-      const teacherModulesRef = ref(getDatabase(), `TeacherModules/${currentUser.uid}`);
-      onValue(teacherModulesRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          const modules = Object.keys(data).map((key) => data[key]);
-          setMyModules(modules);
-        }
-      });
-    }
-  }, [currentUser]);
+  const [test1Semester1, setTest1Semester1] = useState('0');
+  const [test1Semester2, setTest1Semester2] = useState('0');
+  const [test1Semester3, setTest1Semester3] = useState('0');
+  const [test2Semester1, setTest2Semester1] = useState('0');
+  const [test2Semester2, setTest2Semester2] = useState('0');
+  const [test2Semester3, setTest2Semester3] = useState('0');
+  const [examSemester1, setExamSemester1] = useState('0');
+  const [examSemester2, setExamSemester2] = useState('0');
+  const [examSemester3, setExamSemester3] = useState('0');
 
   const data = [
-    { name: 'Semester 01', mark: 0 },
-    { name: 'Semester 02', mark: 0 },
-    { name: 'Semester 03', mark: 0 },
-  ];
-  const handleEditClick = () => {
-    // set the state variables to the current values in the table
-    setTest1Semester1(/* current value in table */);
-    setTest1Semester2(/* current value in table */);
-    setTest1Semester3(/* current value in table */);
-    setTest2Semester1(/* current value in table */);
-    setTest2Semester2(/* current value in table */);
-    setTest2Semester3(/* current value in table */);
-    setExamSemester1(/* current value in table */);
-    setExamSemester2(/* current value in table */);
-    setExamSemester3(/* current value in table */);
-  };
+    { name: 'Semester 01', test1: test1Semester1, test2: test2Semester1, exam: examSemester1 },
+    { name: 'Semester 02', test1: test1Semester2, test2: test2Semester2, exam: examSemester2 },
+    { name: 'Semester 03', test1: test1Semester3, test2: test2Semester3, exam: examSemester3 }
+    ];
+    
+    const handleEditClick = () => {
+      setIsEditing(true);
+    };
 
-  const handleSaveClick = () => {
-    // save the new values to the state variables
-    // update the data array accordingly
-  };
+    const handleSaveClick = () => {
+      setIsEditing(false);
+    };
+
+    //Display a Result table/Chart for each module
+    useEffect(() => {
+      if (currentUser) {
+        const teacherModulesRef = ref(getDatabase(), `TeacherModules/${currentUser.uid}`);
+        onValue(teacherModulesRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            const modules = Object.keys(data).map((key) => data[key]);
+            setMyModules(modules);
+          }
+        });
+      }
+    }, [currentUser]);
 
   if (!firebaseInitialized) {
     return <Spinner />;
@@ -99,32 +92,35 @@ const MyStudents = () => {
               <tbody>
                 <tr>
                   <td style={{ backgroundColor: 'lightgrey' }}>Test 01</td>
-                  <td><input value={test1Semester1} onChange={(e) => setTest1Semester1(e.target.value)} /></td>
-                  <td><input value={test1Semester2} onChange={(e) => setTest1Semester2(e.target.value)} /></td>
-                  <td><input value={test1Semester3} onChange={(e) => setTest1Semester3(e.target.value)} /></td>
+                  <td><input type="number" value={test1Semester1} onChange={(e) => setTest1Semester1(e.target.value)} disabled={!isEditing} /></td>
+                  <td><input type="number" value={test1Semester2} onChange={(e) => setTest1Semester2(e.target.value)} disabled={!isEditing} /></td>
+                  <td><input type="number" value={test1Semester3} onChange={(e) => setTest1Semester3(e.target.value)} disabled={!isEditing} /></td>
                 </tr>
                 <tr>
                   <td style={{ backgroundColor: 'lightgrey' }}>Test 02</td>
-                  <td><input value={test2Semester1} onChange={(e) => setTest2Semester1(e.target.value)} /></td>
-                  <td><input value={test2Semester2} onChange={(e) => setTest2Semester2(e.target.value)} /></td>
-                  <td><input value={test2Semester3} onChange={(e) => setTest2Semester3(e.target.value)} /></td>
+                  <td><input type="number" value={test2Semester1} onChange={(e) => setTest2Semester1(e.target.value)} disabled={!isEditing} /></td>
+                  <td><input type="number" value={test2Semester2} onChange={(e) => setTest2Semester2(e.target.value)} disabled={!isEditing} /></td>
+                  <td><input type="number" value={test2Semester3} onChange={(e) => setTest2Semester3(e.target.value)} disabled={!isEditing} /></td>
                 </tr>
                 <tr>
                   <td style={{ backgroundColor: 'lightgrey' }}>Exam</td>
-                  <td><input value={examSemester1} onChange={(e) => setExamSemester1(e.target.value)} /></td>
-                  <td><input value={examSemester2} onChange={(e) => setExamSemester2(e.target.value)} /></td>
-                  <td><input value={examSemester3} onChange={(e) => setExamSemester3(e.target.value)} /></td>
+                  <td><input type="number" value={examSemester1} onChange={(e) => setExamSemester1(e.target.value)} disabled={!isEditing} /></td>
+                  <td><input type="number" value={examSemester2} onChange={(e) => setExamSemester2(e.target.value)} disabled={!isEditing} /></td>
+                  <td><input type="number" value={examSemester3} onChange={(e) => setExamSemester3(e.target.value)} disabled={!isEditing} /></td>
                 </tr>
               </tbody>
               <div className='buttons'>
-                  <Button className='btn-edit' variant="primary">Edit </Button>
-                  <Button className='btn-save' variant="success">Save</Button>
+                  <Button className='btn-edit' variant="primary" onClick={handleEditClick}>Edit </Button>
+                  <Button className='btn-save' variant="success" onClick={handleSaveClick}>Save</Button>
               </div>
             </Table>
             <LineChart width={500} height={300} data={data}>
-              <Line dataKey="mark" stroke="#8884d8" />
+              <Line dataKey="test1" stroke="#8884d8" />
+              <Line dataKey="test2" stroke="#82ca9d" />
+              <Line dataKey="exam" stroke="#ffc658" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis label={{ value: 'Grades', angle: -90, position: 'insideLeft' }}/>
+              <Legend/>
             </LineChart>
             </Card.Body>
           </Card>
