@@ -1,4 +1,4 @@
-.card-search {
+.search-card{
     width: 90%;
     margin-top: 50px;
     margin-left: 80px;
@@ -14,3 +14,27 @@
     align-items: center;
     justify-content: center;
   }
+  .table {
+    max-width: 90%;
+  }
+  .body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .buttons {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .btn-edit {
+    margin-right: 4px;
+  }
+  .btn-save {
+    margin-left: 4px;
+  }
+  input {
+    border: none;
+  }
+
