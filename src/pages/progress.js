@@ -19,15 +19,15 @@ const MyStudents = () => {
   const [studentID, setStudentID] = useState('');
   const [studentDisplayedName, setStudentDisplayedName] = useState('');
 
-  const [test1Semester1, setTest1Semester1] = useState('0');
-  const [test1Semester2, setTest1Semester2] = useState('0');
-  const [test1Semester3, setTest1Semester3] = useState('0');
-  const [test2Semester1, setTest2Semester1] = useState('0');
-  const [test2Semester2, setTest2Semester2] = useState('0');
-  const [test2Semester3, setTest2Semester3] = useState('0');
-  const [examSemester1, setExamSemester1] = useState('0');
-  const [examSemester2, setExamSemester2] = useState('0');
-  const [examSemester3, setExamSemester3] = useState('0');
+  const [test1Semester1, setTest1Semester1] = useState('');
+  const [test1Semester2, setTest1Semester2] = useState('');
+  const [test1Semester3, setTest1Semester3] = useState('');
+  const [test2Semester1, setTest2Semester1] = useState('');
+  const [test2Semester2, setTest2Semester2] = useState('');
+  const [test2Semester3, setTest2Semester3] = useState('');
+  const [examSemester1, setExamSemester1] = useState('');
+  const [examSemester2, setExamSemester2] = useState('');
+  const [examSemester3, setExamSemester3] = useState('');
 
   const [myModules, setMyModules] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -66,12 +66,13 @@ const MyStudents = () => {
               const resultsDB = ref(getDatabase(), `Results/${uid}`);
               onValue(resultsDB, (snapshot) => {
                 if (snapshot.exists()) {
-                  setStudentDisplayedName('<Student Name> results:');
-                  setTest1Semester1(snapshot.t1s1);
-                  setTest2Semester1(snapshot.t2s1);
-                  setExamSemester1(snapshot.es1);
+                  const marks = snapshot.val(); 
+                  setStudentDisplayedName(`${fname} ${lname} 's results:`);
+                  setTest1Semester1(marks.t1s1);setTest2Semester1(marks.t2s1);setExamSemester1(marks.es1);
+                  setTest1Semester2(marks.t1s2);setTest2Semester2(marks.t2s2);setExamSemester2(marks.es2);
+                  setTest1Semester3(marks.t1s3);setTest2Semester3(marks.t2s3);setExamSemester3(marks.es3);
                 } else {
-                  setStudentDisplayedName('<Student Name> results:');
+                  setStudentDisplayedName(`${fname} ${lname} 's results:`);
                 }
               })
 
@@ -89,14 +90,14 @@ const MyStudents = () => {
     };
 
     const handleSaveClick = () => {
-      setIsEditing(false);
       const resultsDB = ref(getDatabase(), `Results/${studentID}`);
       const userResults = {
-        t1s1: test1Semester1,
-        t2s1: test2Semester1,
-        es1: examSemester1,
+        t1s1: test1Semester1,t2s1: test2Semester1,es1: examSemester1,
+        t1s2: test1Semester2,t2s2: test2Semester2,es2: examSemester2,
+        t1s3: test1Semester3,t2s3: test2Semester3,es3: examSemester3,
       }
       set(resultsDB, userResults);
+      setIsEditing(false);
     };
 
   if (!firebaseInitialized) {
@@ -121,7 +122,7 @@ const MyStudents = () => {
           </Card.Body>
         </Card> 
         }
-        <div> {studentDisplayedName} </div>
+        <h4 className='student_name_result'> {studentDisplayedName} </h4>
 
         {myModules.map((module) => (
           <Card className='table' key={module.id}>
