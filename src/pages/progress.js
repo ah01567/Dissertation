@@ -30,6 +30,7 @@ const MyStudents = () => {
   const [examSemester3, setExamSemester3] = useState('');
 
   const [myModules, setMyModules] = useState([]);
+  const [currentModule, setCurrentModule] = useState([]);
   const [allowResultTicket, setAllowResultTicket] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -93,8 +94,12 @@ const MyStudents = () => {
       setIsEditing(true);
     };
 
+    function handleCardClick(moduleTitle) {
+      setCurrentModule(moduleTitle);
+    }
+
     const handleSaveClick = () => {
-      const resultsDB = ref(getDatabase(), `Results/${studentID}`);
+      const resultsDB = ref(getDatabase(), `Results/${studentID}/${currentModule}`);
       const userResults = {
         t1s1: test1Semester1,t2s1: test2Semester1,es1: examSemester1,
         t1s2: test1Semester2,t2s2: test2Semester2,es2: examSemester2,
@@ -129,7 +134,7 @@ const MyStudents = () => {
         <h4 className='student_name_result'> {studentDisplayedName} </h4>
 
         { allowResultTicket && myModules.map((module) => (
-          <Card className='table' key={module.id}>
+          <Card className='table' key={module.id} onClick={() => handleCardClick(module.title)}>
             <Card.Header as="h3" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{module.title}</Card.Header>
             <Card.Body className='body'>
             <Table className='result-table' bordered style={{ maxWidth: "20%"}}>
