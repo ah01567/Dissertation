@@ -37,4 +37,11 @@
   input {
     border: none;
   }
+  .student_name_result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: purple;
+  }
 

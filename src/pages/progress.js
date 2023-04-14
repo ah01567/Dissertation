@@ -30,6 +30,7 @@ const MyStudents = () => {
   const [examSemester3, setExamSemester3] = useState('');
 
   const [myModules, setMyModules] = useState([]);
+  const [allowResultTicket, setAllowResultTicket] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const data = [
@@ -56,18 +57,21 @@ const MyStudents = () => {
     const searchForStudent = () => {
       const teacherID = currentUser.uid;
       const mystudentsDB = ref(getDatabase(), `MyStudents/${teacherID}`);
-      onValue(mystudentsDB, (snapshot) => {
+      onValue(mystudentsDB, async (snapshot) => {
         if (snapshot.exists()) {
-          snapshot.forEach((uidSnapshot) => {
+          let matchFound = false;
+          await Promise.all(snapshot.forEach((uidSnapshot) => {
             const uid = uidSnapshot.key;
             const childData = uidSnapshot.val();
             if (childData.fname === fname && childData.lname === lname) {
               setStudentID(uid);
+              setAllowResultTicket(true);
               const resultsDB = ref(getDatabase(), `Results/${uid}`);
               onValue(resultsDB, (snapshot) => {
                 if (snapshot.exists()) {
                   const marks = snapshot.val(); 
                   setStudentDisplayedName(`${fname} ${lname} 's results:`);
+                  //Fetch student marks and display them in the table
                   setTest1Semester1(marks.t1s1);setTest2Semester1(marks.t2s1);setExamSemester1(marks.es1);
                   setTest1Semester2(marks.t1s2);setTest2Semester2(marks.t2s2);setExamSemester2(marks.es2);
                   setTest1Semester3(marks.t1s3);setTest2Semester3(marks.t2s3);setExamSemester3(marks.es3);
@@ -75,12 +79,12 @@ const MyStudents = () => {
                   setStudentDisplayedName(`${fname} ${lname} 's results:`);
                 }
               })
-
-            } else {
-              alert('Sorry! You are not authorized to access this students result');
-              setStudentID('');
             }
-          })
+          }))
+          if (!matchFound) {
+            alert('Sorry! You are not authorized to access this student\'s result');
+            setStudentID('');
+          }
         }
     });
   }
@@ -113,7 +117,7 @@ const MyStudents = () => {
           <Card.Header as="h3">MyStudents results:</Card.Header>
           <Card.Body>
             <Card.Text>Enter your students' <b>First </b>and<b> Last name</b> to add, edit and save their modules results, using the search bar below:</Card.Text>
-            <h3 className='mystudents-search-title'>MyStudent search: </h3>
+            <h3 className='mystudents-search-title'>MyStudent result search: </h3>
             <div className='mystudents-search-title'>
               <Form.Control type="text" placeholder="First name" style={{width: '30%', marginRight: '4px'}} value={fname} onChange={(e) => setFname(e.target.value)}/>
               <Form.Control type="text" placeholder="Last name" style={{width: '30%', marginLeft: '4px'}} value={lname} onChange={(e) => setLname(e.target.value)}/>
@@ -124,11 +128,11 @@ const MyStudents = () => {
         }
         <h4 className='student_name_result'> {studentDisplayedName} </h4>
 
-        {myModules.map((module) => (
+        { allowResultTicket && myModules.map((module) => (
           <Card className='table' key={module.id}>
             <Card.Header as="h3" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{module.title}</Card.Header>
             <Card.Body className='body'>
-            <Table className='result-table' bordered style={{ maxWidth: "50%"}}>
+            <Table className='result-table' bordered style={{ maxWidth: "20%"}}>
               <thead>
                 <tr style={{ maxWidth: "30%", backgroundColor: 'lightgrey' }}>
                   <th style={{ backgroundColor: 'white' }}></th>
