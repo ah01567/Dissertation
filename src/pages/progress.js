@@ -138,19 +138,6 @@ const MyStudents = () => {
       setIsEditing(false);
     };
 
-    // useEffect(() => {
-    //   if (currentUser?.admin === false) {
-    //     const studentModulesDB = ref(getDatabase(), `StudentModules/${currentUser.uid}`);
-    //     onValue(studentModulesDB, (snapshot) => {
-    //       if (snapshot.exists()) {
-    //         const modules = snapshot.val();
-    //         const moduleList = Object.keys(modules).map((key) => modules[key]);
-    //         setMyModules(moduleList);
-    //       }
-    //     });
-    //   }
-    // }, [currentUser]);
-
   if (!firebaseInitialized) {
     return <Spinner />;
   }
