@@ -1,3 +1,4 @@
+/* Search for Student Card */
 .search-card{
     width: 90%;
     margin-top: 50px;
@@ -14,28 +15,13 @@
     align-items: center;
     justify-content: center;
   }
-  .table {
-    max-width: 90%;
-  }
-  .body {
+
+  /* Modules dropdown */
+  .dropdown {
     display: flex;
-    flex-direction: row;
     align-items: center;
-  }
-  .buttons {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 10px;
-  }
-  .btn-edit {
-    margin-right: 4px;
-  }
-  .btn-save {
-    margin-left: 4px;
-  }
-  input {
-    border: none;
+    justify-content: center;
+    margin-top: 15px;
   }
   .student_name_result {
     display: flex;
@@ -45,3 +31,38 @@
     color: purple;
   }
 
+  /* Result Card */
+  .body {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: 'wrap'
+  }
+  .table-graph-card {
+    width: 90%;
+  }
+  .result-table {
+    flex: 0 0 auto;
+    margin-right: auto;
+  }
+  input {
+    border: none;
+  }
+  .graph {
+    flex: 0 0 auto;
+    margin-left: auto;
+    overflow: hidden;
+  }
+  .buttons {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .btn-edit {
+    margin-right: 4px;
+    width: 150px;
+  }
+  .btn-save {
+    margin-left: 4px;
+    width: 150px;
+  }
