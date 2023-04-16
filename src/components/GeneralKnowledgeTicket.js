@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Card from 'react-bootstrap/Card';
 import '../Design/Course.css';
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
@@ -15,11 +15,6 @@ const GeneralKnowledge = () => {
     const [countryInfo, setCountryInfo] = useState(null);
     const [resultAvailable, setResultAvailable] = useState(false);
 
-    useEffect(() => {
-        if (resultAvailable) {
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-    }, [resultAvailable]);
 
     return (
         <div >
@@ -30,7 +25,7 @@ const GeneralKnowledge = () => {
 
                 <div className='module-content'>
                 <Card>
-                    <Card.Body className='country-props'>
+                    <Card.Body>
                     <h3 class='country-search-title'>Country search: </h3> 
                             <div className='country-search-bar'><Form.Control type="text" placeholder="Search for any country of your choice ..." style={{width: "60%"}}   value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/> 
                             <Button

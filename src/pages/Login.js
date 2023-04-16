@@ -35,7 +35,6 @@ const Login = () => {
         };
        
     
- 
     return(
             <div className='form-container'>   
             {error && <Alert style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999}} key='danger' variant='danger'>{error}</Alert> }                                                                         

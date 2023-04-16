@@ -6,7 +6,7 @@ import UploadLesson from '../components/UploadLesson';
 import Button from 'react-bootstrap/Button';
 
 const Module = () => {
-    const {firebaseInitialized } = useAuth();
+    const {isAdmin, firebaseInitialized } = useAuth();
 
     if (!firebaseInitialized) {
         return <Spinner />;
@@ -18,9 +18,11 @@ const Module = () => {
                 <NavBar />
             </div>    
             <div>
-                <h1>Arbic:</h1>
-                <Button variant="danger">Delete module</Button> {''}
-                <Button variant="success">Add content section</Button>
+                <h1>Arbic:</h1> {isAdmin &&
+                <React.Fragment>
+                    <Button variant="danger">Delete module</Button>
+                    <Button variant="success">Add content section</Button>
+                </React.Fragment> }
                 <UploadLesson />
             </div>
         </div>

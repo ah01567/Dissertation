@@ -1,0 +1,75 @@
+/* Search for Student Card */
+.search-card{
+    width: 90%;
+    margin-top: 50px;
+    margin-left: 80px;
+  }
+  .mystudents-search-title{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Modules dropdown */
+  .dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  .student_name_result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: purple;
+  }
+  .student_name_result_paragraph {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: black;
+  }
+
+  /* Result Card */
+  .body {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: 'wrap'
+  }
+  .table-graph-card {
+    width: 90%;
+  }
+  .result-table {
+    flex: 0 0 auto;
+    margin-right: auto;
+  }
+  input {
+    border: none;
+  }
+  .graph {
+    flex: 0 0 auto;
+    margin-left: auto;
+    overflow: hidden;
+  }
+  .buttons {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .btn-edit {
+    margin-right: 4px;
+    width: 150px;
+  }
+  .btn-save {
+    margin-left: 4px;
+    width: 150px;
+  }
