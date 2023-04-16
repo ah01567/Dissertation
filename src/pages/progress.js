@@ -43,7 +43,10 @@ const MyStudents = () => {
 
     //Display a Result table/Chart for each module
     useEffect(() => {
-      if (currentUser) {
+      if (!currentUser) {
+        return;
+      }
+      if (isAdmin) {
         const teacherModulesRef = ref(getDatabase(), `TeacherModules/${currentUser.uid}`);
         onValue(teacherModulesRef, (snapshot) => {
           const data = snapshot.val();
@@ -52,8 +55,18 @@ const MyStudents = () => {
             setMyModules(modules);
           }
         });
+      } else {
+        const studentModulesRef = ref(getDatabase(), `StudentModules/${currentUser.uid}`);
+        onValue(studentModulesRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            const modules = Object.keys(data).map((key) => data[key]);
+            setMyModules(modules);
+          }
+        });
       }
-    }, [currentUser]);
+    }, [currentUser, isAdmin]);
+    
 
     // Search if user exists on MyStudents list. Only give fetch results permission to authorized teachers
     const searchForStudent = () => {
@@ -84,6 +97,7 @@ const MyStudents = () => {
     }, [currentModule]);
 
     const fetchResult = () => {
+      if (isAdmin) {
       const resultsDB = ref(getDatabase(), `Results/${studentID}/${currentModule}`);
       onValue(resultsDB, (snapshot) => {
         if (snapshot.exists()) {
@@ -96,7 +110,19 @@ const MyStudents = () => {
           setStudentDisplayedName(`${fname} ${lname} 's results:`);
         }
       })
-    }
+    } else {
+        const studentViewID = currentUser?.uid;
+        const resultsDB = ref(getDatabase(), `Results/${studentViewID}/${currentModule}`);
+        onValue(resultsDB, (snapshot) => {
+          if (snapshot.exists()) {
+            const marks = snapshot.val(); 
+            //Fetch student marks and display them in the table
+            setTest1Semester1(marks.t1s1);setTest2Semester1(marks.t2s1);setExamSemester1(marks.es1);
+            setTest1Semester2(marks.t1s2);setTest2Semester2(marks.t2s2);setExamSemester2(marks.es2);
+            setTest1Semester3(marks.t1s3);setTest2Semester3(marks.t2s3);setExamSemester3(marks.es3);
+          }})
+    } }
+
     const handleEditClick = () => {
       setIsEditing(true);
     };
@@ -111,6 +137,19 @@ const MyStudents = () => {
       set(resultsDB, userResults);
       setIsEditing(false);
     };
+
+    // useEffect(() => {
+    //   if (currentUser?.admin === false) {
+    //     const studentModulesDB = ref(getDatabase(), `StudentModules/${currentUser.uid}`);
+    //     onValue(studentModulesDB, (snapshot) => {
+    //       if (snapshot.exists()) {
+    //         const modules = snapshot.val();
+    //         const moduleList = Object.keys(modules).map((key) => modules[key]);
+    //         setMyModules(moduleList);
+    //       }
+    //     });
+    //   }
+    // }, [currentUser]);
 
   if (!firebaseInitialized) {
     return <Spinner />;
@@ -191,8 +230,8 @@ const MyStudents = () => {
                           </tbody>
                       </Table>
                       <div className='buttons'>
-                          <Button className='btn-edit' variant="primary" onClick={handleEditClick} disabled={isEditing}>Edit </Button>
-                          <Button className='btn-save' variant="success" onClick={handleSaveClick} disabled={!isEditing}>Save</Button>
+                          {isAdmin && (<Button className='btn-edit' variant="primary" onClick={handleEditClick} disabled={isEditing}>Edit </Button>)}
+                          {isAdmin && (<Button className='btn-save' variant="success" onClick={handleSaveClick} disabled={!isEditing}>Save</Button>)}
                       </div>
                   </div>
                   <div className='graph'>
@@ -212,6 +251,85 @@ const MyStudents = () => {
             ))}
         </div>
           )}
+
+
+
+        { !isAdmin && (
+                <div>
+                  <h3 className='student_name_result'> Welcome to your progress page</h3>
+                  <h5 className='student_name_result_paragraph'> Please select the module you would like to view your progress on, using the dropdown below:</h5>
+                    <div className='dropdown'>
+                      <Dropdown onSelect={(value) => setCurrentModule(value)}>
+                          <Dropdown.Toggle style={{ width: "200px", height: "50px", fontSize: "16px" }} variant="outline-primary" id="dropdown-basic">
+                            Select a module
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu style={{ width: "200px", fontSize: "16px" }}>
+                            {myModules.map((module) => (
+                              <Dropdown.Item key={module.id} eventKey={module.title}>{module.title}</Dropdown.Item>
+                            ))}
+                          </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
+
+                    {myModules.map((module) => (
+                      <div key={module.id}>
+                        {currentModule === module.title && (
+                        <Card className='table-graph-card' key={module.id}>
+                          <Card.Header as="h3" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{module.title}</Card.Header>
+                          <Card.Body className='body' >
+                            <div className='result-table'>
+                              <Table bordered>
+                                  <thead>
+                                    <tr style={{ maxWidth: "30%", backgroundColor: 'lightgrey' }}>
+                                      <th style={{ backgroundColor: 'white' }}></th>
+                                      <th>Semester 01</th>
+                                      <th>Semester 02</th>
+                                      <th>Semester 03</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td style={{ backgroundColor: 'lightgrey' }}>Test 01</td>
+                                      <td><input type="number" value={test1Semester1} onChange={(e) => setTest1Semester1(e.target.value)} disabled={!isEditing} /></td>
+                                      <td><input type="number" value={test1Semester2} onChange={(e) => setTest1Semester2(e.target.value)} disabled={!isEditing} /></td>
+                                      <td><input type="number" value={test1Semester3} onChange={(e) => setTest1Semester3(e.target.value)} disabled={!isEditing} /></td>
+                                    </tr>
+                                    <tr>
+                                      <td style={{ backgroundColor: 'lightgrey' }}>Test 02</td>
+                                      <td><input type="number" value={test2Semester1} onChange={(e) => setTest2Semester1(e.target.value)} disabled={!isEditing} /></td>
+                                      <td><input type="number" value={test2Semester2} onChange={(e) => setTest2Semester2(e.target.value)} disabled={!isEditing} /></td>
+                                      <td><input type="number" value={test2Semester3} onChange={(e) => setTest2Semester3(e.target.value)} disabled={!isEditing} /></td>
+                                    </tr>
+                                    <tr>
+                                      <td style={{ backgroundColor: 'lightgrey' }}>Exam</td>
+                                      <td><input type="number" value={examSemester1} onChange={(e) => setExamSemester1(e.target.value)} disabled={!isEditing} /></td>
+                                      <td><input type="number" value={examSemester2} onChange={(e) => setExamSemester2(e.target.value)} disabled={!isEditing} /></td>
+                                      <td><input type="number" value={examSemester3} onChange={(e) => setExamSemester3(e.target.value)} disabled={!isEditing} /></td>
+                                    </tr>
+                                  </tbody>
+                              </Table>
+                              <div className='buttons'>
+                                  {isAdmin && (<Button className='btn-edit' variant="primary" onClick={handleEditClick} disabled={isEditing}>Edit </Button>)}
+                                  {isAdmin && (<Button className='btn-save' variant="success" onClick={handleSaveClick} disabled={!isEditing}>Save</Button>)}
+                              </div>
+                          </div>
+                          <div className='graph'>
+                              <LineChart width={500} height={300} data={data}>
+                                <Line dataKey="test1" stroke="#8884d8" />
+                                <Line dataKey="test2" stroke="#82ca9d" />
+                                <Line dataKey="exam" stroke="#ffc658" />
+                                <XAxis dataKey="name" />
+                                <YAxis label={{ value: 'Grades', angle: -90, position: 'insideLeft' }}/>
+                                <Legend/>
+                              </LineChart>
+                          </div>
+                          </Card.Body>
+                        </Card>
+                        )}
+                    </div>
+                    ))}
+                </div>
+                  )}
     </div>
   );
 }
