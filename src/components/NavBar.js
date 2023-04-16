@@ -40,7 +40,7 @@ function ColorSchemesExample() {
                 <Nav.Link as={Link} to="/progress" className='NavItemWithMargin'> <FaChartLine/> Progress</Nav.Link>
                 <Nav.Link as={Link} to="/" className='NavItemWithMargin'> <FaWpforms/> Feedback</Nav.Link>
                 <NavDropdown title="User" id="navbarScrollingDropdown" >
-                    <NavDropdown.Item as={Link} to="/">Profile settings</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/userdetails">Profile settings</NavDropdown.Item>
                     {isAdmin && <NavDropdown.Item as={Link} to="/mystudents">MyStudents List</NavDropdown.Item> }
                     <NavDropdown.Item as={Link} to="/">Privacy policy</NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/">Contact Us</NavDropdown.Item>
