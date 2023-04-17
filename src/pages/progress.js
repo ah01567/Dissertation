@@ -12,7 +12,7 @@ import { LineChart, Line, XAxis, YAxis, Legend } from 'recharts';
 import '../Design/progress.css';
 
 
-const MyStudents = () => {
+const Progress = () => {
   const { currentUser, isAdmin, firebaseInitialized } = useAuth();
 
   const [fname, setFname] = useState('');
@@ -321,4 +321,4 @@ const MyStudents = () => {
   );
 }
 
-export default MyStudents;
+export default Progress;
