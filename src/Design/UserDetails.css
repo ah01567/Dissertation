@@ -1,0 +1,24 @@
+.my-form-group {
+  padding: 10px;
+}
+.picture-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -20px;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.edit-btn {
+  width: 200px;
+  margin-top: 20px;
+  margin-right: 5px;
+}
+.save-btn {
+  width: 200px;
+  margin-top: 20px;
+  margin-left: 5px;
+}

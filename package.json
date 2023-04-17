@@ -13,6 +13,7 @@
     "firebase": "^9.6.1",
     "firebase-admin": "^11.5.0",
     "leaflet": "^1.9.3",
+    "mdb-react-ui-kit": "^6.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
