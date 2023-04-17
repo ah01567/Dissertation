@@ -8,8 +8,9 @@ import { MDBContainer } from "mdb-react-ui-kit";
 import { getDatabase, onValue, ref, set } from 'firebase/database';
 
 const UserProfileForm = () => {
-    const { currentUser, isAdmin, firebaseInitialized } = useAuth();
 
+  const { currentUser, firebaseInitialized } = useAuth();
+  const [inputsEnabled, setInputsEnabled] = useState(false); 
   const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
@@ -18,15 +19,18 @@ const UserProfileForm = () => {
   const [schoolName, setSchoolName] = useState();
   const [email, setEmail] = useState();
 
-  const [inputsEnabled, setInputsEnabled] = useState(false); 
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleProfilePictureChange = (event) => {
+  // Select profile picture from files
+  const handleFileSelect = (event) => {
       setSelectedProfilePicture(event.target.files[0]);
   };
   const profilePicture = selectedProfilePicture
   ? URL.createObjectURL(selectedProfilePicture)
   : "https://mdbcdn.b-cdn.net/img/new/avatars/2.webp";
   
+
+  //Fetch User's credentials from Database for display 
   useEffect(() => {
     const currentUserID = currentUser?.uid;
     if (!currentUserID) {
@@ -46,7 +50,12 @@ const UserProfileForm = () => {
     });
   }, [currentUser?.uid]);
 
+  // Edit the inputs
+  const handleEdit = () => {
+    setInputsEnabled(true);
+  };
 
+  // Save the changes and push to Database
   const handleSave = (event) => {
     event.preventDefault();
     setInputsEnabled(false);
@@ -63,10 +72,7 @@ const UserProfileForm = () => {
       set(userRef, newData);
 };
 
-  const handleEdit = () => {
-    setInputsEnabled(true);
-  };
-
+  // Upload the spinner when initializing
   if (!firebaseInitialized) {
     return <Spinner />;
   }
@@ -84,12 +90,21 @@ const UserProfileForm = () => {
                                 src= {profilePicture}
                                 className="rounded-circle"
                                 alt="Avatar"
-                                style={{ width: "200px", height: "200px", borderRadius: "50%" }}
+                                style={{ width: "200px", height: "200px", borderRadius: "50%", marginTop:'-20px' }}
                             />
                         </MDBContainer>
 
                         <div className='picture-btn'>
-                            <input variant="outline-primary" type="file" onChange={handleProfilePictureChange} />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileSelect}
+                            style={{ display: 'none' }}
+                            id="file-input"
+                          />
+                          <label htmlFor="file-input" style={{ backgroundColor: 'purple', color: 'white', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>
+                            Upload profile picture
+                          </label>
                         </div>
 
                         <Form className="my-form-group">
