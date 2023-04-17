@@ -13,13 +13,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-app.get('/api/data', (req, res) => {
-    const data = [
-      { id: 1, name: 'John' },
-      { id: 2, name: 'Jane' },
-      { id: 3, name: 'Didou' }
-    ];
-    
-    res.json(data);
-  });
   
