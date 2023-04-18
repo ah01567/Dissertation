@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
@@ -17,14 +18,14 @@ const Feedback = () => {
             event.preventDefault();
           
             try {
-              const response = await fetch("/api/submit-feedback", {
+                const response = await axios.post("http://localhost:5000/api/submit-feedback", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ fullName, email, userRole, feedbackText }),
               });
           
-              const data = await response.text();
-              console.log(data);
+            //   const data = await response.text();
+            //   console.log(data);
           
               // Clear the form fields on successful submission
               setFullName("");
