@@ -9,13 +9,33 @@ const Feedback = () => {
     const { firebaseInitialized } = useAuth();
 
         const [fullName, setFullName] = useState("");
+        const [email, setEmail] = useState("");
         const [userRole, setUserRole] = useState("");
         const [feedbackText, setFeedbackText] = useState("");
       
-        const handleSubmit = (event) => {
-          event.preventDefault();
-          // TODO: handle form submission
-        };
+        const handleSubmit = async (event) => {
+            event.preventDefault();
+          
+            try {
+              const response = await fetch("/api/submit-feedback", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fullName, email, userRole, feedbackText }),
+              });
+          
+              const data = await response.text();
+              console.log(data);
+          
+              // Clear the form fields on successful submission
+              setFullName("");
+              setEmail("");
+              setUserRole("");
+              setFeedbackText("");
+            } catch (error) {
+              console.log(error);
+            }
+          };
+
           
     if (!firebaseInitialized) {
         return <Spinner />;
@@ -37,6 +57,17 @@ const Feedback = () => {
                                     placeholder="Enter your full name"
                                     value={fullName}
                                     onChange={(event) => setFullName(event.target.value)}
+                                    style={{marginBottom:'15px'}}
+                                 required/>
+                            </Form.Group>
+
+                            <Form.Group controlId="formEmail">
+                                <Form.Label><b>Email address:</b></Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="Enter your email address"
+                                    value={email}
+                                    onChange={(event) => setEmail(event.target.value)}
                                     style={{marginBottom:'15px'}}
                                  required/>
                             </Form.Group>
