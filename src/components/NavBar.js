@@ -43,7 +43,7 @@ function ColorSchemesExample() {
                     <NavDropdown.Item as={Link} to="/userdetails">Profile settings</NavDropdown.Item>
                     {isAdmin && <NavDropdown.Item as={Link} to="/mystudents">MyStudents List</NavDropdown.Item> }
                     <NavDropdown.Item as={Link} to="/">Privacy policy</NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/">Contact Us</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/contactUs">Contact Us</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item as={Link} to="/" onClick={handleLogout}>
                         Logout
