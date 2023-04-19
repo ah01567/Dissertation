@@ -3,34 +3,36 @@ import axios from "axios";
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import '../Design/Feedback.css';
 
 const ContactUs = () => {
-    const { firebaseInitialized } = useAuth();
+        const { firebaseInitialized } = useAuth();
+        const [error, setError] = useState("");
 
         const [fullName, setFullName] = useState("");
         const [email, setEmail] = useState("");
+        const [userRole, setUserRole] = useState("");
         const [issue, setIssue] = useState("");
-        const [feedbackText, setFeedbackText] = useState("");
+        const [issueText, setIssueText] = useState("");
       
         const handleSubmit = async (event) => {
             event.preventDefault();
-          
             try {
             const response = await axios.post(
-                "http://localhost:5000/api/submit-feedback",
-                { fullName, email, issue, feedbackText }
+                "http://localhost:5000/api/contact-us",
+                { fullName, email, userRole, issue, issueText },
+                
             );
-          
-            //   const data = await response.text();
-            //   console.log(data);
+              
+              setError('Email successfully submitted');
           
               // Clear the form fields on successful submission
               setFullName("");
               setEmail("");
+              setUserRole("");
               setIssue("");
-              setFeedbackText("");
+              setIssueText("");
             } catch (error) {
               console.log(error);
             }
@@ -43,7 +45,8 @@ const ContactUs = () => {
  
     return(
         <div>
-            <div> <NavBar /> </div>    
+            <div> <NavBar /> </div>
+            <div>{error && <Alert style={{left: 0, right: 0, zIndex: 9999}} key='success' variant='success'>{error}</Alert> }</div>
             <div className="all">
                 <div className="feedback-container">
                     <div className="feedback-title"><h1>Contact Us:</h1></div>
@@ -72,6 +75,23 @@ const ContactUs = () => {
                                  required/>
                             </Form.Group>
 
+                            <Form.Group controlId="formUserRole">
+                                <Form.Label> <b>Role:</b></Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    defaultValue="Choose..."
+                                    value={userRole}
+                                    onChange={(event) => setUserRole(event.target.value)}
+                                    style={{marginBottom:'15px'}}
+                                    required>
+
+                                    <option disabled selected value="">Select role </option>
+                                    <option>Teacher</option>
+                                    <option>Student</option>
+                                    <option>Parent</option>
+                                </Form.Control>
+                            </Form.Group>
+
                             <Form.Group controlId="formTitle">
                                 <Form.Label><b>Issue title:*</b></Form.Label>
                                 <Form.Control
@@ -89,8 +109,8 @@ const ContactUs = () => {
                                     as="textarea"
                                     rows={3}
                                     placeholder="Provide further details about your issue ..."
-                                    value={feedbackText}
-                                    onChange={(event) => setFeedbackText(event.target.value)}
+                                    value={issueText}
+                                    onChange={(event) => setIssueText(event.target.value)}
                                 required/>
                             </Form.Group>
 

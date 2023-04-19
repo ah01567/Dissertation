@@ -3,11 +3,12 @@ import axios from "axios";
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import '../Design/Feedback.css';
 
 const Feedback = () => {
-    const { firebaseInitialized } = useAuth();
+        const { firebaseInitialized } = useAuth();
+        const [error, setError] = useState("");
 
         const [fullName, setFullName] = useState("");
         const [email, setEmail] = useState("");
@@ -23,8 +24,7 @@ const Feedback = () => {
                 { fullName, email, userRole, feedbackText }
             );
           
-            //   const data = await response.text();
-            //   console.log(data);
+            setError('Email successfully submitted');
           
               // Clear the form fields on successful submission
               setFullName("");
@@ -43,7 +43,8 @@ const Feedback = () => {
  
     return(
         <div>
-            <div> <NavBar /> </div>    
+            <div> <NavBar /> </div>  
+            <div>{error && <Alert style={{left: 0, right: 0, zIndex: 9999}} key='success' variant='success'>{error}</Alert> }</div>
             <div className="all">
                 <div className="feedback-container">
                     <div className="feedback-title"><h1>Feedback form:</h1></div>
