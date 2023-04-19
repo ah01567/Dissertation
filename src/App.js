@@ -5,7 +5,9 @@ import Course from './pages/Course';
 import Module from './pages/Module';
 import MyStudents from './pages/MyStudents';
 import Progress from './pages/progress';
+import Feedback from './pages/Feedback';
 import UserDetails from './pages/UserDetails';
+import ContactUs from './pages/ContactUs';
 import { BrowserRouter as Router} from 'react-router-dom';
 import {Routes, Route} from 'react-router-dom';
  
@@ -21,9 +23,11 @@ function App() {
                <Route path="/register" element={<Register/>}/>
                <Route path="/course" element={<Course />}/>
                <Route path="/course/:moduleTitle" element={<Module/>}/>
-               <Route path="/mystudents" element={<MyStudents />}/>
                <Route path="/progress" element={<Progress />}/>
+               <Route path="/feedback" element={<Feedback />}/>
                <Route path="/userdetails" element={<UserDetails />}/>
+               <Route path="/mystudents" element={<MyStudents />}/>
+               <Route path="/contactUs" element={<ContactUs />}/>
             </Routes>               
         </section>
       </div>

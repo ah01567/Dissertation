@@ -102,7 +102,7 @@ const UserProfileForm = () => {
                             style={{ display: 'none' }}
                             id="file-input"
                           />
-                          <label htmlFor="file-input" style={{ backgroundColor: 'purple', color: 'white', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>
+                          <label htmlFor="file-input" style={{ backgroundColor: '#B565A7', color: 'white', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>
                             Upload profile picture
                           </label>
                         </div>

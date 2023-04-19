@@ -1,0 +1,31 @@
+.all {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+.feedback-container {
+    width: 70%;
+    margin-top: 50px;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+
+  .feedback-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h1 {
+    color: purple;
+  }
+  .inputs {
+    margin-top: 20px;
+  }
+  .btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
