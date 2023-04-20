@@ -7,7 +7,7 @@ import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Chatbox.css';
 
 const Sidebar = () => {
   return (
-    <Container className="sidebar" style={{width:'30%'}}>
+    <Container className="sidebar" style={{width:'35%'}}>
       <Row>
         <Col>
           <SearchBar />

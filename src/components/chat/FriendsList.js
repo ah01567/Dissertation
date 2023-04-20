@@ -13,7 +13,7 @@ const FriendsList = () => {
             className="mr-3 rounded-circle"
             style={{ width: '40px', height: '40px' }}
           />
-            <div className="flex-grow-1">Charlot Greenwood</div>
+            <div className="flex-grow-1">Emma Greenwood</div>
           </div>
         </ListGroup.Item>
     </ListGroup>
