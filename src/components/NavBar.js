@@ -36,7 +36,7 @@ function ColorSchemesExample() {
             <Nav className="me-auto">
                 <Nav.Link as={Link} to="/" className='NavItemWithMargin'> <FaHome size={20}/> Home</Nav.Link>
                 <Nav.Link as={Link} to="/course" className='NavItemWithMargin'> <FaBook/> Course</Nav.Link>
-                <Nav.Link as={Link} to="/" className='NavItemWithMargin'><FaRocketchat/> ChatBox</Nav.Link>
+                <Nav.Link as={Link} to="/chat" className='NavItemWithMargin'><FaRocketchat/> ChatBox</Nav.Link>
                 <Nav.Link as={Link} to="/progress" className='NavItemWithMargin'> <FaChartLine/> Progress</Nav.Link>
                 <Nav.Link as={Link} to="/feedback" className='NavItemWithMargin'> <FaWpforms/> Feedback</Nav.Link>
                 <NavDropdown title="User" id="navbarScrollingDropdown" >
