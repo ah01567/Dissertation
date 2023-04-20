@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
-import GeneralKnowledgeTicket from '../components/GeneralKnowledgeTicket';
+import GeneralKnowledgeTicket from '../components/course/GeneralKnowledgeTicket';
 import { FaPlus } from 'react-icons/fa';
 import '../Design/Course.css';
 import Modal from 'react-modal';

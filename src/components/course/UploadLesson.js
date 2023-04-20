@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
-import useAuth from "../pages/CurrentUser";
-import '../Design/Course.css';
+import useAuth from "../../pages/CurrentUser";
+import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Course.css';
 
 const ModuleTicket = () => {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
-import UploadLesson from '../components/UploadLesson';
+import UploadLesson from '../components/course/UploadLesson';
 import Button from 'react-bootstrap/Button';
 
 const Module = () => {

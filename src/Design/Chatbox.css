@@ -1,0 +1,30 @@
+/* SideBar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    height: 100%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+  
+  @media (max-width: 767.98px) {
+    .sidebar {
+      position: static;
+      width: 100%;
+      margin-bottom: 20px;
+      box-shadow: none;
+    }
+  }
+
+  /* Search Bar */
+  .friends-search-bar {
+    margin-bottom: 20px;
+  }
+  .friends-search-bar input[type="text"] {
+    border-radius: 15px;
+  }
+  .friends-search-bar button {
+    border-radius: 0 15px 15px 0;
+  }

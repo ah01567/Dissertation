@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import useAuth from "./CurrentUser";
 import Spinner from '../components/Spinner';
 import NavBar from '../components/NavBar';
-import { db } from './firebase';
-import { onValue, off, get, ref, set } from 'firebase/database';
-import { Form, Button, FormControl } from 'react-bootstrap';
-
+import Sidebar from '../components/chat/Sidebar';
+import Chatbox from '../components/chat/Chatbox';
 
 function Chat() {
     
@@ -17,8 +15,8 @@ function Chat() {
   return (
     <div>
         <div><NavBar/></div>  
-        <div>
-        </div>
+        <div><Sidebar /></div>
+        {/* <div><Chatbox /></div> */}
     </div>
   );
 }

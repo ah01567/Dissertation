@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Card from 'react-bootstrap/Card';
-import '../Design/Course.css';
+import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Course.css';
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import Form from 'react-bootstrap/Form';
 import { FaSearch } from 'react-icons/fa';
