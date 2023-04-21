@@ -14,9 +14,9 @@ function Chat() {
   }
   return (
     <div>
-        <div><NavBar/></div>  
+        <div><NavBar/></div>
         <div><Sidebar /></div>
-        {/* <div><Chatbox /></div> */}
+        <div><Chatbox /></div>
     </div>
   );
 }

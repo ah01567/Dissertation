@@ -1,6 +1,7 @@
   .navbar {
     background-color: purple;
     font-size: 1.2rem;
+    z-index: 1;
   }
   .NavLogoWithMargin {
     margin-right: 100px;

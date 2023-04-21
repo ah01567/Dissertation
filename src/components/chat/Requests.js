@@ -14,8 +14,8 @@ const Requests = () => {
             style={{ width: '40px', height: '40px' }}
           />
             <div className="flex-grow-1">Emma Greenwood</div>
-              <Button variant="success" className="accept-btn mr-2 px-1">Accept</Button>
-              <Button variant="danger" className="refuse-btn px-1">Refuse</Button>
+              <Button variant="success" className="accept-btn mr-2 px-1" size="sm">Accept</Button>
+              <Button variant="danger" className="refuse-btn px-1" size="sm">Refuse</Button>
           </div>
         </ListGroup.Item>
     </ListGroup>
