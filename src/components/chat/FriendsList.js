@@ -8,6 +8,7 @@ const FriendsList = () => {
   const [friends, setFriends] = useState([]);
   const { currentUser } = useAuth();
 
+  // Fetch users from 'Friends' DB and display them 
   useEffect(() => {
     const currentUserID = currentUser?.uid;
     const dbRef = ref(db, `Friends/${currentUserID}`);

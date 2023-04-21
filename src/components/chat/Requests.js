@@ -31,11 +31,15 @@ const Requests = () => {
 
   const handleAccept = (id, name) => {
     const friendRef = ref(db, `Friends/${currentUserID}/${id}`);
+    const friendRefReverse = ref(db, `Friends/${id}/${currentUserID}`); // add reverse friend reference
     set(friendRef, { name, status: "accepted" }).then(() => {
-      const requestRef = ref(db, `Requests/${currentUserID}/${id}`);
-      remove(requestRef);
+      // add reverse friend reference with same name and status
+      set(friendRefReverse, { name, status: "accepted" }).then(() => {
+        const requestRef = ref(db, `Requests/${currentUserID}/${id}`);
+        remove(requestRef);
+      });
     });
-  };
+  };  
 
   const handleRefuse = (id) => {
     const requestRef = ref(db, `Requests/${currentUserID}/${id}`);
