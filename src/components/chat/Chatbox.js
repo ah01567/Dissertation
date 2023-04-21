@@ -12,7 +12,7 @@ import {
 } from "mdb-react-ui-kit";
 import { FaPaperPlane } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
-import { FaRocketchat } from "react-icons/fa";
+import { BsChatDots } from "react-icons/bs";
 import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Chatbox.css';
 
 export default function App() {
@@ -35,7 +35,7 @@ export default function App() {
             </MDBCardHeader>
               <MDBCardBody>
                 <div className="d-flex p-3" style={{display: 'flex', justifyContent: 'center'}}>
-                  <h3>Welcome to MyOnlyBook ChatBox <FaRocketchat/></h3>
+                  <h3>Welcome to MyOnlyBook ChatBox <BsChatDots/></h3>
                 </div>
                 <div className="d-flex flex-row justify-content-start">
                   <img
