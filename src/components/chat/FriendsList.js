@@ -3,6 +3,7 @@ import useAuth from "/Users/ahmedhenine/Desktop/myonlybook/src/pages/CurrentUser
 import { ListGroup } from 'react-bootstrap';
 import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
 import { ref, onValue, get } from 'firebase/database';
+import { NavLink } from 'react-router-dom';
 
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
@@ -34,7 +35,8 @@ const FriendsList = () => {
 
   return (
     <ListGroup className="friends-list" style={{ marginBottom: '20px' }}>
-      {friends.map(({ id, fname, lname, status }) => (
+      {friends.map(({ id, fname, lname }) => (
+        <NavLink to={`/chat/${id}`} key={id} activeClassName="active">
         <ListGroup.Item key={id}>
           <div className="d-flex align-items-center">
             <img
@@ -48,6 +50,7 @@ const FriendsList = () => {
             </div>
           </div>
         </ListGroup.Item>
+        </NavLink>
       ))}
     </ListGroup>
   );
