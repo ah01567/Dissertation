@@ -1,21 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useAuth from "/Users/ahmedhenine/Desktop/myonlybook/src/pages/CurrentUser.js";
+import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
+import { onValue, off, get, ref, set } from 'firebase/database';
 import {
-  MDBContainer,
   MDBRow,
   MDBCol,
   MDBCard,
   MDBCardHeader,
   MDBCardBody,
   MDBCardFooter,
-  MDBIcon,
-  MDBBtn,
 } from "mdb-react-ui-kit";
 import { FaPaperPlane } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
 import { BsChatDots } from "react-icons/bs";
 import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Chatbox.css';
 
-export default function App() {
+const ChatBox = () => {
+
+  const { currentUser } = useAuth();
+  const [previousMessages, setPreviousMessages] = useState([]);
+  const [message, setMessage] = useState('');
+  
+  // Fetch all previous messages
+  const loadChat = () => {
+    const currentUserID = currentUser?.uid;
+    const receiverID = "receiverUserID"; // replace with the actual receiver's user ID
+    const chatRef = ref(db, `Chat/${currentUserID}/${receiverID}`);
+    
+    onValue(chatRef, snapshot => {
+      const messages = [];
+      snapshot.forEach(childSnapshot => {
+        const message = childSnapshot.val().message;
+        messages.push(message);
+      });
+      setPreviousMessages(messages);
+    });
+  };
+
+  // Push messages into DB
+  const sendMessage = () => {
+    const senderID = currentUser?.uid;
+    const receiverID = "receiverUserID"; // replace with the actual receiver's user ID
+    const timestamp = new Date().getTime();
+
+      const chatDB = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
+        const messageDetails = {
+          sender: senderID,
+          message: message,
+      };
+      set(chatDB, messageDetails);
+      setMessage('');
+    }
+  
+
   return (
     <div>
       <MDBRow className="d-flex">
@@ -37,37 +74,24 @@ export default function App() {
                 <div className="d-flex p-3" style={{display: 'flex', justifyContent: 'center'}}>
                   <h3>Welcome to MyOnlyBook ChatBox <BsChatDots/></h3>
                 </div>
-                <div className="d-flex flex-row justify-content-start">
+                <div className="d-flex flex-row justify-content-end p-2 ms-3 mb-1">
+                  <div>
+                  {previousMessages.map((message, index) => (
+                    <p
+                      key={index}
+                      className=" p-2 ms-3 mb-1 rounded-3"
+                      style={{ backgroundColor: "#f5f6f7"}}
+                    >
+                      {message}
+                    </p>
+                  ))}
+                  </div>
                   <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                     alt="avatar 1"
                     style={{ width: "45px", height: "100%" }}
                   />
-                  <div>
-                    <p
-                      className="small p-2 ms-3 mb-1 rounded-3"
-                      style={{ backgroundColor: "#f5f6f7" }}
-                    >
-                      Hi
-                    </p>
-                    <p
-                      className="small p-2 ms-3 mb-1 rounded-3"
-                      style={{ backgroundColor: "#f5f6f7" }}
-                    >
-                      How are you ...???
-                    </p>
-                    <p
-                      className="small p-2 ms-3 mb-1 rounded-3"
-                      style={{ backgroundColor: "#f5f6f7" }}
-                    >
-                      What are you doing tomorrow? Can we come up a bar?
-                    </p>
-                    <p className="small ms-3 mb-3 rounded-3 text-muted">
-                      23:58
-                    </p>
-                  </div>
                 </div>
-
 
               </MDBCardBody>
             <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3" style={{position:'fixed', bottom:'0', width:'100%', width: "calc(100% - 30%)"}}>
@@ -81,8 +105,10 @@ export default function App() {
                 class="form-control form-control-lg"
                 id="exampleFormControlInput1"
                 placeholder="Type message"
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
               ></input>
-                <button className="btn ml-3">
+                <button className="btn ml-3" disabled={!message} onClick={sendMessage}>
                   <FaPaperPlane />
                 </button>
             </MDBCardFooter>
@@ -93,3 +119,4 @@ export default function App() {
   );
 }
 
+export default ChatBox; 
