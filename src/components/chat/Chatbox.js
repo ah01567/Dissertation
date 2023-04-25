@@ -69,7 +69,10 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
                     >
                       <div
                         className="rounded-3"
-                        style={{ backgroundColor: "#f5f6f7", padding:'7px'}}
+                        style={{
+                          backgroundColor: messageObj.senderID === currentUserUID ? "#f5f6f7" : "greenyellow",
+                          padding: '7px'
+                        }}
                       >
                         {messageObj.message}
                       </div>
