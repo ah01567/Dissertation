@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useAuth from "/Users/ahmedhenine/Desktop/myonlybook/src/pages/CurrentUser.js";
 import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
-import { onValue, ref, set } from 'firebase/database';
+import { ref, set } from 'firebase/database';
 import {
   MDBRow,
   MDBCol,
@@ -26,7 +26,6 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
     const senderID = currentUser?.uid;
     const timestamp = new Date().getTime();
 
-    const chatRef = ref(db, 'Chat');
       const chatDB1 = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
       const chatDB2 = ref(db, `Chat/${receiverID}/${senderID}/${timestamp}`) 
       const messageDetails = {
@@ -83,7 +82,7 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
                 </div>
 
               </MDBCardBody>
-            <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3" style={{position:'fixed', bottom:'0', width:'100%', width: "calc(100% - 30%)"}}>
+            <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3" style={{position:'fixed', bottom:'0',width: "calc(100% - 30%)"}}>
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                 alt="avatar 3"
