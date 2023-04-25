@@ -26,14 +26,17 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
     const senderID = currentUser?.uid;
     const timestamp = new Date().getTime();
 
-      const chatDB = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
-        const messageDetails = {
+    const chatRef = ref(db, 'Chat');
+      const chatDB1 = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
+      const chatDB2 = ref(db, `Chat/${receiverID}/${senderID}/${timestamp}`) 
+      const messageDetails = {
           sender: senderID,
           message: message,
       };
-      set(chatDB, messageDetails);
+      set(chatDB1, messageDetails);
+      set(chatDB2, messageDetails);
       setMessage('');
-    }
+  }
 
   return receiverID && receiverName ? (
     <div>
@@ -72,11 +75,11 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
                     </div>
                   ))}
                   </div>
-                  <img
+                  {/* <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                     alt="avatar 1"
                     style={{ width: "45px", height: "100%" }}
-                  />
+                  /> */}
                 </div>
 
               </MDBCardBody>

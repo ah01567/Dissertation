@@ -53,7 +53,6 @@ const FriendsList = () => {
         
         onValue(chatRef, (snapshot) => {
           snapshot.forEach((childSnapshot) => {
-            // If the first sender was 'currentUser'
             if (childSnapshot.key === currentUserID) {
               const senderChatRef = ref(db, `Chat/${currentUserID}`);
               onValue(senderChatRef, (senderSnapshot) => {
@@ -73,28 +72,7 @@ const FriendsList = () => {
                   }
                 });
               });
-
-              // If the first sender was 'The other User'
-            } else if(childSnapshot.key === receiverID) {
-              const senderChatRef = ref(db, `Chat/${receiverID}`);
-              onValue(senderChatRef, (senderSnapshot) => {
-                senderSnapshot.forEach((receiverSnapshot) => {
-                  if (receiverSnapshot.key === currentUserID) {
-                    const messages = [];
-                    receiverSnapshot.forEach((messageSnapshot) => {
-                      const message = messageSnapshot.val().message;
-                      const whosSender = messageSnapshot.val().sender;
-                      const messageObj = {
-                        message: message,
-                        senderID: whosSender
-                      };
-                      messages.push(messageObj);
-                    });
-                    setPreviousMessages(messages);
-                  }
-                });
-              });
-            }
+             }
           })
         });
       }
