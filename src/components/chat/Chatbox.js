@@ -32,9 +32,11 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
           sender: senderID,
           message: message,
       };
-      set(chatDB1, messageDetails);
-      set(chatDB2, messageDetails);
-      setMessage('');
+      if(message !== '') {
+        set(chatDB1, messageDetails);
+        set(chatDB2, messageDetails);
+        setMessage('');
+    }
   }
 
   return receiverID && receiverName ? (
@@ -96,7 +98,7 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
               ></input>
-                <button className="btn ml-3" disabled={!message} onClick={sendMessage}>
+                <button className="btn ml-3" onClick={sendMessage}>
                   <FaPaperPlane />
                 </button>
             </MDBCardFooter>
