@@ -4,10 +4,15 @@ import { ListGroup } from 'react-bootstrap';
 import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
 import { ref, onValue, get } from 'firebase/database';
 import { NavLink } from 'react-router-dom';
+import ChatBox from './Chatbox';
 
 const FriendsList = () => {
   const [friends, setFriends] = useState([]);
   const { currentUser } = useAuth();
+
+  const [receiverName, setReceiverName] = useState('');
+  const [receiverID, setReceiverID] = useState(''); 
+  const [previousMessages, setPreviousMessages] = useState([]);
 
   // Fetch users from 'Friends' DB and display them 
   useEffect(() => {
@@ -33,11 +38,76 @@ const FriendsList = () => {
     });
   }, [currentUser]);
 
+  // When clicking on a Friend ticket ...
+  function handleFriendClick(id, fname, lname) {
+    setReceiverID(id);
+    setReceiverName(`${fname} ${lname}`);
+  }
+
+  // Fetch all previous messages
+    useEffect(() => {
+      if (receiverID) {
+        setPreviousMessages([]);
+        const currentUserID = currentUser?.uid;
+        const chatRef = ref(db, `Chat`);
+        
+        onValue(chatRef, (snapshot) => {
+          snapshot.forEach((childSnapshot) => {
+            // If the first sender was 'currentUser'
+            if (childSnapshot.key === currentUserID) {
+              const senderChatRef = ref(db, `Chat/${currentUserID}`);
+              onValue(senderChatRef, (senderSnapshot) => {
+                senderSnapshot.forEach((receiverSnapshot) => {
+                  if (receiverSnapshot.key === receiverID) {
+                    const messages = [];
+                    receiverSnapshot.forEach((messageSnapshot) => {
+                      const message = messageSnapshot.val().message;
+                      const whosSender = messageSnapshot.val().sender;
+                      const messageObj = {
+                        message: message,
+                        senderID: whosSender
+                      };
+                      messages.push(messageObj);
+                    });
+                    setPreviousMessages(messages);
+                  }
+                });
+              });
+
+              // If the first sender was 'The other User'
+            } else if(childSnapshot.key === receiverID) {
+              const senderChatRef = ref(db, `Chat/${receiverID}`);
+              onValue(senderChatRef, (senderSnapshot) => {
+                senderSnapshot.forEach((receiverSnapshot) => {
+                  if (receiverSnapshot.key === currentUserID) {
+                    const messages = [];
+                    receiverSnapshot.forEach((messageSnapshot) => {
+                      const message = messageSnapshot.val().message;
+                      const whosSender = messageSnapshot.val().sender;
+                      const messageObj = {
+                        message: message,
+                        senderID: whosSender
+                      };
+                      messages.push(messageObj);
+                    });
+                    setPreviousMessages(messages);
+                  }
+                });
+              });
+            }
+          })
+        });
+      }
+    }, [currentUser?.uid, receiverID]);
+  
+  
+
   return (
+    <div>
     <ListGroup className="friends-list" style={{ marginBottom: '20px' }}>
       {friends.map(({ id, fname, lname }) => (
-        <NavLink to={`/chat/${id}`} key={id} activeClassName="active">
-        <ListGroup.Item key={id}>
+        <NavLink key={id} activeClassName="active">
+        <ListGroup.Item key={id} onClick={() => {handleFriendClick(id, fname, lname);}}>
           <div className="d-flex align-items-center">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8IxW0B9TzuWakKREpBVikX0Jbi4ahnAcfMdXedONE_w&s"
@@ -53,6 +123,8 @@ const FriendsList = () => {
         </NavLink>
       ))}
     </ListGroup>
+    {receiverID && receiverName && <ChatBox receiverID={receiverID} receiverName={receiverName} previousMessages={previousMessages}/>}
+  </div>
   );
 };
 

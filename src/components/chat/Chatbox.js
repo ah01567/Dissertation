@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import useAuth from "/Users/ahmedhenine/Desktop/myonlybook/src/pages/CurrentUser.js";
 import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
-import { onValue, off, get, ref, set } from 'firebase/database';
+import { onValue, ref, set } from 'firebase/database';
 import {
   MDBRow,
   MDBCol,
@@ -15,32 +15,15 @@ import { FaVideo } from "react-icons/fa";
 import { BsChatDots } from "react-icons/bs";
 import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Chatbox.css';
 
-const ChatBox = () => {
+const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
 
   const { currentUser } = useAuth();
-  const [previousMessages, setPreviousMessages] = useState([]);
+  const currentUserUID = currentUser?.uid;
   const [message, setMessage] = useState('');
-  
-  // Fetch all previous messages
-  const loadChat = () => {
-    const currentUserID = currentUser?.uid;
-    const receiverID = "receiverUserID"; // replace with the actual receiver's user ID
-    const chatRef = ref(db, `Chat/${currentUserID}/${receiverID}`);
-    
-    onValue(chatRef, snapshot => {
-      const messages = [];
-      snapshot.forEach(childSnapshot => {
-        const message = childSnapshot.val().message;
-        messages.push(message);
-      });
-      setPreviousMessages(messages);
-    });
-  };
 
   // Push messages into DB
   const sendMessage = () => {
     const senderID = currentUser?.uid;
-    const receiverID = "receiverUserID"; // replace with the actual receiver's user ID
     const timestamp = new Date().getTime();
 
       const chatDB = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
@@ -51,9 +34,8 @@ const ChatBox = () => {
       set(chatDB, messageDetails);
       setMessage('');
     }
-  
 
-  return (
+  return receiverID && receiverName ? (
     <div>
       <MDBRow className="d-flex">
         <MDBCol md="10" lg="8" xl="6">
@@ -66,7 +48,7 @@ const ChatBox = () => {
             className="mr-3 rounded-circle"
             style={{ width: '40px', height: '40px' }}
           />
-            <h5 className="flex-grow-1">Emma Greenwood</h5>
+            <h5 className="flex-grow-1">{receiverName}</h5>
           </div>
           <FaVideo size={32}/>
             </MDBCardHeader>
@@ -74,16 +56,20 @@ const ChatBox = () => {
                 <div className="d-flex p-3" style={{display: 'flex', justifyContent: 'center'}}>
                   <h3>Welcome to MyOnlyBook ChatBox <BsChatDots/></h3>
                 </div>
-                <div className="d-flex flex-row justify-content-end p-2 ms-3 mb-1">
+                <div>
                   <div>
-                  {previousMessages.map((message, index) => (
-                    <p
+                  {previousMessages.map((messageObj, index) => (
+                    <div
                       key={index}
-                      className=" p-2 ms-3 mb-1 rounded-3"
-                      style={{ backgroundColor: "#f5f6f7"}}
+                      className={messageObj.senderID === currentUserUID ? 'd-flex flex-row justify-content-end p-2 ms-3 mb-1 rounded-3' : 'd-flex flex-row justify-content-start p-2 ms-3 mb-1 rounded-3'}
                     >
-                      {message}
-                    </p>
+                      <div
+                        className="rounded-3"
+                        style={{ backgroundColor: "#f5f6f7", padding:'7px'}}
+                      >
+                        {messageObj.message}
+                      </div>
+                    </div>
                   ))}
                   </div>
                   <img
@@ -104,7 +90,7 @@ const ChatBox = () => {
                 type="text"
                 class="form-control form-control-lg"
                 id="exampleFormControlInput1"
-                placeholder="Type message"
+                placeholder="Type your message"
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
               ></input>
@@ -116,7 +102,7 @@ const ChatBox = () => {
         </MDBCol>
       </MDBRow>
     </div>
-  );
+  ) : null;
 }
 
 export default ChatBox; 
