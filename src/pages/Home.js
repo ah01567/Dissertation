@@ -3,9 +3,11 @@ import Login from './Login';
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
+import BookSearch from '../components/SearchEngine/BookSearch';
+import BookDisplay from '../components/SearchEngine/BookDisplay';
 
 const Home = () => {
-    const { currentUser, isAdmin, firebaseInitialized } = useAuth();
+    const { currentUser, firebaseInitialized } = useAuth();
 
     if (!firebaseInitialized) {
         return <Spinner />;
@@ -13,19 +15,13 @@ const Home = () => {
  
     return(
         <div>
-            {!currentUser ? (
-                <div><Login /></div>
-            ) : (            
-            <nav>
-                <div>
-                    <NavBar />
-                </div>      
-                
-                <div>
-                    {isAdmin && <p>I am an admin</p>}
-                </div>
-
-            </nav>)}
+            {!currentUser ? (<div><Login /></div>) : (            
+            <div> 
+                <NavBar />
+                <BookSearch /> 
+            </div>
+            //<div> <BookDisplay /> </div>
+            )}
         </div>
     )
 }

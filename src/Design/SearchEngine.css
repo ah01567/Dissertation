@@ -1,0 +1,19 @@
+/* Book search input  */
+.mybook-search-title{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    color: black;
+  }
+
+.mybook-search-input {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+  }
+
+/* Book search displayed result  */
