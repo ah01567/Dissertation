@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CryptoJS from 'crypto-js';
 import useAuth from "/Users/ahmedhenine/Desktop/myonlybook/src/pages/CurrentUser.js";
 import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
 import { ref, set } from 'firebase/database';
@@ -15,28 +16,43 @@ import { FaVideo } from "react-icons/fa";
 import { BsChatDots } from "react-icons/bs";
 import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Chatbox.css';
 
+
 const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
 
   const { currentUser } = useAuth();
   const currentUserUID = currentUser?.uid;
   const [message, setMessage] = useState('');
 
+  // Encrypt messages using CryptoJS AES method
   // Push messages into DB
   const sendMessage = () => {
-    const senderID = currentUser?.uid;
-    const timestamp = new Date().getTime();
-
+      const senderID = currentUser?.uid;
+      const timestamp = new Date().getTime();
+    
       const chatDB1 = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
       const chatDB2 = ref(db, `Chat/${receiverID}/${senderID}/${timestamp}`) 
+    
+      var key = CryptoJS.enc.Utf8.parse('1234567887654321');
+      var iv = CryptoJS.enc.Utf8.parse('1234567887654321');
+    
+      var encryptedMessage = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(message), key, 
+      {
+        keySize: 128 / 8,
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      });
+
       const messageDetails = {
-          sender: senderID,
-          message: message,
+        sender: senderID,
+        message: encryptedMessage.toString(), // Store the encrypted message
       };
+    
       if(message !== '') {
         set(chatDB1, messageDetails);
         set(chatDB2, messageDetails);
         setMessage('');
-    }
+      }
   }
 
   return receiverID && receiverName ? (

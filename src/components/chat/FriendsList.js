@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CryptoJS from 'crypto-js';
 import useAuth from "/Users/ahmedhenine/Desktop/myonlybook/src/pages/CurrentUser.js";
 import { ListGroup } from 'react-bootstrap';
 import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
@@ -44,13 +45,13 @@ const FriendsList = () => {
     setReceiverName(`${fname} ${lname}`);
   }
 
-  // Fetch all previous messages
+  // Decrypt, using Cryptojs AES and Fetch all previous messages
     useEffect(() => {
       if (receiverID) {
         setPreviousMessages([]);
         const currentUserID = currentUser?.uid;
         const chatRef = ref(db, `Chat`);
-        
+
         onValue(chatRef, (snapshot) => {
           snapshot.forEach((childSnapshot) => {
             if (childSnapshot.key === currentUserID) {
@@ -62,8 +63,20 @@ const FriendsList = () => {
                     receiverSnapshot.forEach((messageSnapshot) => {
                       const message = messageSnapshot.val().message;
                       const whosSender = messageSnapshot.val().sender;
+
+                      var key = CryptoJS.enc.Utf8.parse('1234567887654321');
+                      var iv = CryptoJS.enc.Utf8.parse('1234567887654321');
+                    
+                      var decryptedMessage = CryptoJS.AES.decrypt(message, key, 
+                      {
+                        keySize: 128 / 8,
+                        iv: iv,
+                        mode: CryptoJS.mode.CBC,
+                        padding: CryptoJS.pad.Pkcs7
+                      });
+
                       const messageObj = {
-                        message: message,
+                        message: CryptoJS.enc.Utf8.stringify(decryptedMessage),
                         senderID: whosSender
                       };
                       messages.push(messageObj);
