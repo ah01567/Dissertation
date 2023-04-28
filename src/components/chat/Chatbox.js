@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import CryptoJS from 'crypto-js';
 import useAuth from "/Users/ahmedhenine/Desktop/myonlybook/src/pages/CurrentUser.js";
 import { db } from '/Users/ahmedhenine/Desktop/myonlybook/src/pages/firebase.js';
-import { onValue, off, get, ref, set } from 'firebase/database';
+import { ref, set } from 'firebase/database';
 import {
   MDBRow,
   MDBCol,
@@ -15,45 +16,46 @@ import { FaVideo } from "react-icons/fa";
 import { BsChatDots } from "react-icons/bs";
 import '/Users/ahmedhenine/Desktop/myonlybook/src/Design/Chatbox.css';
 
-const ChatBox = () => {
+
+const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
 
   const { currentUser } = useAuth();
-  const [previousMessages, setPreviousMessages] = useState([]);
+  const currentUserUID = currentUser?.uid;
   const [message, setMessage] = useState('');
-  
-  // Fetch all previous messages
-  const loadChat = () => {
-    const currentUserID = currentUser?.uid;
-    const receiverID = "receiverUserID"; // replace with the actual receiver's user ID
-    const chatRef = ref(db, `Chat/${currentUserID}/${receiverID}`);
-    
-    onValue(chatRef, snapshot => {
-      const messages = [];
-      snapshot.forEach(childSnapshot => {
-        const message = childSnapshot.val().message;
-        messages.push(message);
-      });
-      setPreviousMessages(messages);
-    });
-  };
 
+  // Encrypt messages using CryptoJS AES method
   // Push messages into DB
   const sendMessage = () => {
-    const senderID = currentUser?.uid;
-    const receiverID = "receiverUserID"; // replace with the actual receiver's user ID
-    const timestamp = new Date().getTime();
+      const senderID = currentUser?.uid;
+      const timestamp = new Date().getTime();
+    
+      const chatDB1 = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
+      const chatDB2 = ref(db, `Chat/${receiverID}/${senderID}/${timestamp}`) 
+    
+      var key = CryptoJS.enc.Utf8.parse('1234567887654321');
+      var iv = CryptoJS.enc.Utf8.parse('1234567887654321');
+    
+      var encryptedMessage = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(message), key, 
+      {
+        keySize: 128 / 8,
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      });
 
-      const chatDB = ref(db, `Chat/${senderID}/${receiverID}/${timestamp}`) 
-        const messageDetails = {
-          sender: senderID,
-          message: message,
+      const messageDetails = {
+        sender: senderID,
+        message: encryptedMessage.toString(), // Store the encrypted message
       };
-      set(chatDB, messageDetails);
-      setMessage('');
-    }
-  
+    
+      if(message !== '') {
+        set(chatDB1, messageDetails);
+        set(chatDB2, messageDetails);
+        setMessage('');
+      }
+  }
 
-  return (
+  return receiverID && receiverName ? (
     <div>
       <MDBRow className="d-flex">
         <MDBCol md="10" lg="8" xl="6">
@@ -66,7 +68,7 @@ const ChatBox = () => {
             className="mr-3 rounded-circle"
             style={{ width: '40px', height: '40px' }}
           />
-            <h5 className="flex-grow-1">Emma Greenwood</h5>
+            <h5 className="flex-grow-1">{receiverName}</h5>
           </div>
           <FaVideo size={32}/>
             </MDBCardHeader>
@@ -74,27 +76,34 @@ const ChatBox = () => {
                 <div className="d-flex p-3" style={{display: 'flex', justifyContent: 'center'}}>
                   <h3>Welcome to MyOnlyBook ChatBox <BsChatDots/></h3>
                 </div>
-                <div className="d-flex flex-row justify-content-end p-2 ms-3 mb-1">
+                <div>
                   <div>
-                  {previousMessages.map((message, index) => (
-                    <p
+                  {previousMessages.map((messageObj, index) => (
+                    <div
                       key={index}
-                      className=" p-2 ms-3 mb-1 rounded-3"
-                      style={{ backgroundColor: "#f5f6f7"}}
+                      className={messageObj.senderID === currentUserUID ? 'd-flex flex-row justify-content-end p-2 ms-3 mb-1 rounded-3' : 'd-flex flex-row justify-content-start p-2 ms-3 mb-1 rounded-3'}
                     >
-                      {message}
-                    </p>
+                      <div
+                        className="rounded-3"
+                        style={{
+                          backgroundColor: messageObj.senderID === currentUserUID ? "#f5f6f7" : "greenyellow",
+                          padding: '7px'
+                        }}
+                      >
+                        {messageObj.message}
+                      </div>
+                    </div>
                   ))}
                   </div>
-                  <img
+                  {/* <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                     alt="avatar 1"
                     style={{ width: "45px", height: "100%" }}
-                  />
+                  /> */}
                 </div>
 
               </MDBCardBody>
-            <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3" style={{position:'fixed', bottom:'0', width:'100%', width: "calc(100% - 30%)"}}>
+            <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3" style={{position:'fixed', bottom:'0',width: "calc(100% - 30%)"}}>
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
                 alt="avatar 3"
@@ -104,11 +113,11 @@ const ChatBox = () => {
                 type="text"
                 class="form-control form-control-lg"
                 id="exampleFormControlInput1"
-                placeholder="Type message"
+                placeholder="Type your message"
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
               ></input>
-                <button className="btn ml-3" disabled={!message} onClick={sendMessage}>
+                <button className="btn ml-3" onClick={sendMessage}>
                   <FaPaperPlane />
                 </button>
             </MDBCardFooter>
@@ -116,7 +125,7 @@ const ChatBox = () => {
         </MDBCol>
       </MDBRow>
     </div>
-  );
+  ) : null;
 }
 
 export default ChatBox; 

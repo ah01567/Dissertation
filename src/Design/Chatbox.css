@@ -37,7 +37,15 @@
     margin-left: 10px;
   }
 
-/* Invitations & Requests */
+  /* Friends */
+  .friends-list a {
+    text-decoration: none;
+  }
+  .friends-list .list-group-item:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* Invitations & Requests */
   .accept-btn {
     margin-right: 5px;
   }
