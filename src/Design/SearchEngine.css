@@ -17,3 +17,16 @@
   }
 
 /* Book search displayed result  */
+.result-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.result-section {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: rgb(240, 239, 239);
+}

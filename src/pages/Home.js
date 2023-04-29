@@ -19,8 +19,8 @@ const Home = () => {
             <div> 
                 <NavBar />
                 <BookSearch /> 
+                <BookDisplay />
             </div>
-            //<div> <BookDisplay /> </div>
             )}
         </div>
     )
