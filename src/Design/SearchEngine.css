@@ -24,9 +24,19 @@
 }
 .result-section {
   margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
   background-color: rgb(240, 239, 239);
+}
+
+/* Book ticket */
+.book-ticket {
+  margin-bottom: 20px;
+}
+
+.book-ticket Button {
+  border-radius: 20px;
+}
+
+/* Filter cog */
+.filter-cog {
+  font-size: 30px;
 }
