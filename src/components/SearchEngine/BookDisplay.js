@@ -22,7 +22,7 @@ const BookSearch = () => {
           </Dropdown>
         </div>
         <div className='result-container'>
-            <div className='result-section' style={{ width: '70%', borderRadius: '30px', display: 'flex', flexWrap: 'wrap', borderRadius: '70px'}}>
+            <div className='result-section' style={{ width: '70%', display: 'flex', flexWrap: 'wrap', borderRadius: '70px'}}>
               <Card className='book-ticket' style={{ width: '34%' }}>
                   <div style={{ maxHeight: '300px', overflow: 'hidden' }}>
                     <Card.Img variant="top" src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSP0lfdphbLOAeg4eeObzv3gx2af_qFwnFW9Zxbn7fi7X4NfHzLlFxSB8XI6Q0q45BaUTjyXbxfsdlK0KZ2iCVC3YJntSotsBp8qB87Rri1sdfs2aC215aV&usqp=CAc" />
