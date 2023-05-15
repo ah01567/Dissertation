@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import useAuth from "./CurrentUser";
 import Spinner from '../components/Spinner';
 import NavBar from '../components/NavBar';

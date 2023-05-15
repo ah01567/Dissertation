@@ -50,7 +50,7 @@ const Login = () => {
                                     required                                                                                
                                     placeholder="Email address"
                                     onChange={(e)=>setEmail(e.target.value)}
-                                />
+                                    />
                             </Form.Group>
    
                             <Form.Group className="mb-3" controlId="formBasicPassword">

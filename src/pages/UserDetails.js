@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import useAuth from "./CurrentUser";
 import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
 import '../Design/UserDetails.css';
 import { MDBContainer } from "mdb-react-ui-kit";
 import { getDatabase, onValue, ref, set } from 'firebase/database';
@@ -19,7 +20,9 @@ const UserProfileForm = () => {
   const [schoolName, setSchoolName] = useState();
   const [email, setEmail] = useState();
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   // Select profile picture from files
   const handleFileSelect = (event) => {
@@ -50,10 +53,41 @@ const UserProfileForm = () => {
     });
   }, [currentUser?.uid]);
 
+  //Set modal to TRUE
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+  
+  // Close modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setPassword('');
+    setError('');
+  };
+
   // Edit the inputs
   const handleEdit = () => {
-    setInputsEnabled(true);
+    handleOpenModal();
   };
+
+  // Reauthenticate with Password for security purposes
+  const handlePasswordValidation = () => {
+    const credential = EmailAuthProvider.credential(currentUser.email, password);
+  
+    reauthenticateWithCredential(currentUser, credential)
+      .then(() => {
+        // Password is valid, perform further actions (e.g., enable inputs)
+        setInputsEnabled(true);
+        setPassword('');
+        setError('');
+        handleCloseModal();
+      })
+      .catch((error) => {
+        if (error.code === "auth/wrong-password") {
+          setError("Incorrect password. Please try again");
+        } 
+      });
+  };  
 
   // Save the changes and push to Database
   const handleSave = (event) => {
@@ -70,8 +104,29 @@ const UserProfileForm = () => {
         email: email,
       };
       set(userRef, newData);
-};
+  };
 
+  // Fingerprint authentication
+  const handleFingerprintAuthentication = async () => {
+    try {
+      const credentials = await navigator.credentials.get({
+        publicKey: {
+          // Specify the options for fingerprint authentication
+          // Here you can set the appropriate options based on the Web Authentication API specification
+          // For example, you can set `publicKey` to use `fido2` or `direct` to enable fingerprint authentication
+        },
+      });
+
+      if (credentials) {
+        // Authentication successful, perform further actions
+        setInputsEnabled(true);
+        handleCloseModal();
+      }
+    } catch (error) {
+      // Error occurred during fingerprint authentication
+      console.error(error);
+    }
+  };
   // Upload the spinner when initializing
   if (!firebaseInitialized) {
     return <Spinner />;
@@ -81,6 +136,38 @@ const UserProfileForm = () => {
     <div>
         <div> <NavBar/> </div>
         <div className='profile' >
+        {showModal && (
+          <Modal show={showModal} onHide={handleCloseModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Reauthentication:</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form.Group>
+                  <Form.Label>
+                    Please re-enter your <b>password</b> or use fingerprint for security purposes
+                  </Form.Label>
+                  <Form.Control
+                    type='password'
+                    placeholder='Password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  {error && <p style={{ color: 'red' }}>{error}</p>}
+                  <Button className='fingerprint-btn' variant='primary' onClick={handleFingerprintAuthentication}>
+                    Use Fingerprint
+                  </Button>
+                </Form.Group>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant='danger' onClick={handleCloseModal}>
+                  Cancel
+                </Button>
+                <Button variant='success' onClick={handlePasswordValidation}>
+                  Confirm
+                </Button>
+              </Modal.Footer> 
+          </Modal>
+        )}
             <Container className="mt-5" >
                 <Row className="justify-content-center">
                     <Col md={9}>
