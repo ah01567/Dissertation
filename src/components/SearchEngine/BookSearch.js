@@ -19,6 +19,24 @@ const BookSearch = () => {
             `http://openlibrary.org/search.json?q=${searchTerm}&limit=20`
           );
           const filteredResults = response.data.docs.filter((book) => book.cover_i);
+
+          // Calculate relevance scores based on keyword match position in the title
+          filteredResults.forEach((book) => {
+            const title = book.title.toLowerCase();
+            const searchTermLower = searchTerm.toLowerCase();
+
+            if (title.startsWith(searchTermLower)) {
+              book.relevanceScore = 3; // Highest relevance if the title starts with the search term
+            } else if (title.includes(searchTermLower)) {
+              book.relevanceScore = 2; // Lesser relevance if the title contains the search term
+            } else {
+              book.relevanceScore = 1; // Lowest relevance if the title doesn't contain the search term
+            }
+          });
+
+          // Sort the books based on relevance scores in descending order
+          filteredResults.sort((a, b) => b.relevanceScore - a.relevanceScore);
+
           setResults(filteredResults);
           console.log('Book search request successfully sent for', { searchTerm });
         } catch (error) {
