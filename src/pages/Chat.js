@@ -7,7 +7,7 @@ import Chatbox from '../components/chat/Chatbox';
 
 function Chat() {
     
-  const { currentUser, firebaseInitialized } = useAuth();
+  const { firebaseInitialized } = useAuth();
 
   if (!firebaseInitialized) {
     return <Spinner />;
