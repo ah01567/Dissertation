@@ -24,8 +24,7 @@ const Module = () => {
     // Delete the module from database and redirect users back to Course page when 'Deleted' button is clicked
     const handleDeleteModule = () => {
         const teacherID = currentUser.uid;
-        const moduleRef = ref(db, `TeacherModules/${teacherID}/${moduleName}`);
-        const deletedModule = moduleName;           
+        const moduleRef = ref(db, `TeacherModules/${teacherID}/${moduleName}`);         
         remove(moduleRef)
           .then(() => {
             navigate('/course');
