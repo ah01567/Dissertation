@@ -9,6 +9,7 @@ const Requests = () => {
   const [userNames, setUserNames] = useState([]);
   const currentUserID = currentUser?.uid;
 
+  //Fetch Requests instantly, from the Requests database and display the User's First and last name on the ticket
   useEffect(() => {
     const dbRef = ref(db, "Requests");
     onValue(dbRef, async (snapshot) => {
@@ -29,6 +30,7 @@ const Requests = () => {
     });
   }, [currentUserID]);
 
+  //Accept the friend request
   const handleAccept = (id, name) => {
     const friendRef = ref(db, `Friends/${currentUserID}/${id}`);
     const friendRefReverse = ref(db, `Friends/${id}/${currentUserID}`); // add reverse friend reference
@@ -41,6 +43,7 @@ const Requests = () => {
     });
   };  
 
+  //Refuse the friend request
   const handleRefuse = (id) => {
     const requestRef = ref(db, `Requests/${currentUserID}/${id}`);
     remove(requestRef);

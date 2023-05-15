@@ -12,6 +12,7 @@ const BookDisplay = ({ results }) => {
       return null; 
     }
 
+    //Redirect users to the website to buy the book, using the ISBN code 
     const handleLearnMore = (book) => {
         const isbn = book.isbn ? book.isbn[0] : null;
         if (isbn) {
