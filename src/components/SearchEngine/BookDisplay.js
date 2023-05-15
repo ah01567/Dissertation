@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillFastForwardFill } from "react-icons/bs";
+import axios from 'axios';
 import Filter from './Filter';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -18,7 +19,7 @@ const BookDisplay = ({ results }) => {
           window.open(betterWorldBooksUrl, '_blank');
         }
       };
-      
+
     return(
       <div>
         {results && results.length !== 0 && <Filter /> }
@@ -31,8 +32,8 @@ const BookDisplay = ({ results }) => {
                   </div>
                   <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
-                    <Card.Title>Price: 5£</Card.Title>
-                    <Card.Title>Delivery: 4 - 7 days</Card.Title>
+                    <Card.Title>Price: TBC</Card.Title>
+                    <Card.Title>Delivery duration: TBC</Card.Title>
                     <Button
                       variant="primary"
                       className="learn-more-btn"
