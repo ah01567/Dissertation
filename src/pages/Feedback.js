@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
 import { Form, Button, Alert } from "react-bootstrap";
@@ -43,7 +42,6 @@ const Feedback = () => {
  
     return(
         <div>
-            <div> <NavBar /> </div>  
             <div>{error && <Alert style={{left: 0, right: 0, zIndex: 9999}} key='success' variant='success'>{error}</Alert> }</div>
             <div className="all">
                 <div className="feedback-container">

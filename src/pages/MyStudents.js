@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useAuth from "./CurrentUser";
 import '../Design/MyStudents.css';
-import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -72,7 +71,6 @@ const MyStudents = () => {
   
   return (
     <div>
-      <NavBar />
       <div>
         <Card className='card'>
           <Card.Header as="h3">MyStudents List:</Card.Header>

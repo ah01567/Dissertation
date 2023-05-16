@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { db } from './firebase';
 import { ref, remove} from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
 import UploadLesson from '../components/course/UploadLesson';
@@ -46,9 +45,6 @@ const Module = () => {
   
     return (
       <div>
-        <div>
-          <NavBar />
-        </div>
         <div>
           <h1>{moduleName}:</h1>
           {isAdmin && (

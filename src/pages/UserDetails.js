@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import useAuth from "./CurrentUser";
-import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
 import '../Design/UserDetails.css';
@@ -134,7 +133,6 @@ const UserProfileForm = () => {
 
   return (
     <div>
-        <div> <NavBar/> </div>
         <div className='profile' >
         {showModal && (
           <Modal show={showModal} onHide={handleCloseModal}>

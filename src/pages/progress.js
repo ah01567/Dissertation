@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useAuth from "./CurrentUser";
 import { getDatabase, onValue, ref, set } from 'firebase/database';
-import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -144,7 +143,6 @@ const Progress = () => {
 
   return (
     <div>
-      <NavBar />
       <div>
         {isAdmin &&
           <Card className='search-card'>
