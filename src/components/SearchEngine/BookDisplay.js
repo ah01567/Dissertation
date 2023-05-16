@@ -40,7 +40,7 @@ const BookDisplay = ({ results }) => {
                       className="learn-more-btn"
                       onClick={() => handleLearnMore(book)}
                       >
-                      Learn more <BsFillFastForwardFill />
+                      Purchase book <BsFillFastForwardFill />
                     </Button>                  
               </Card.Body>
               </Card>
