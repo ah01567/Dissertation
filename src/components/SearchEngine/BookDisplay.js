@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BsFillFastForwardFill } from "react-icons/bs";
-import axios from 'axios';
 import Filter from './Filter';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
