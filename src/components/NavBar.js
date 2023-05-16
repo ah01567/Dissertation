@@ -30,7 +30,7 @@ function ColorSchemesExample() {
 }
 
   return (
-      <Navbar ClassName="navbar" variant="dark" >
+      <Navbar className="navbar" variant="dark" >
         <Container>
           <Navbar.Brand as={Link} to="/" className='NavLogoWithMargin' style={{fontSize: '1.5rem'}}>MyOnlyBook</Navbar.Brand>
             <Nav className="me-auto">
