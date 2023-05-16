@@ -20,6 +20,7 @@ const BookSearch = () => {
           );
           const filteredResults = response.data.docs.filter((book) => book.cover_i);
 
+          // SCORING METHOD:
           // Calculate relevance scores based on keyword match position in the title
           filteredResults.forEach((book) => {
             const title = book.title.toLowerCase();
