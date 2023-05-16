@@ -95,11 +95,6 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
                     </div>
                   ))}
                   </div>
-                  {/* <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                    alt="avatar 1"
-                    style={{ width: "45px", height: "100%" }}
-                  /> */}
                 </div>
 
               </MDBCardBody>
