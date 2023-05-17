@@ -126,7 +126,13 @@ const Course = () => {
                 setDisplayedModules([]);
               }
           })
-        })
+          // Cleanup function to remove the listener when the component unmounts
+          return () => {
+            if (modulesRef) {
+              off(modulesRef);
+            }
+          };
+        }, [currentUser, isAdmin]);
 
         if (!firebaseInitialized) {
             return <Spinner />;

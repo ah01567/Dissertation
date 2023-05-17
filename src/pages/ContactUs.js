@@ -83,7 +83,7 @@ const ContactUs = () => {
                                     style={{marginBottom:'15px'}}
                                     required>
 
-                                    <option disabled selected value="">Select role </option>
+                                    <option disabled value="">Select role </option>
                                     <option>Teacher</option>
                                     <option>Student</option>
                                     <option>Parent</option>
