@@ -5,7 +5,7 @@ require('dotenv').config();
 const nodemailer = require('nodemailer');
 
 const app = express();
-const port = 5000;
+const port = 4000;
 
 // Add middleware to parse incoming request data
 app.use(bodyParser.json());
