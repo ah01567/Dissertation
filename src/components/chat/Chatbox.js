@@ -106,7 +106,7 @@ const ChatBox = ({ receiverID, receiverName, previousMessages }) => {
               />
               <input
                 type="text"
-                class="form-control form-control-lg"
+                className="form-control form-control-lg"
                 id="exampleFormControlInput1"
                 placeholder="Type your message"
                 value={message}
