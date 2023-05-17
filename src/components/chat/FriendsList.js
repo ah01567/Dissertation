@@ -97,7 +97,7 @@ const FriendsList = () => {
     <div>
     <ListGroup className="friends-list" style={{ marginBottom: '20px' }}>
       {friends.map(({ id, fname, lname }) => (
-        <NavLink key={id} activeClassName="active">
+        <NavLink key={id} activeclassname="active">
         <ListGroup.Item key={id} onClick={() => {handleFriendClick(id, fname, lname);}}>
           <div className="d-flex align-items-center">
             <img
