@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
 import { Form, Button, Alert } from "react-bootstrap";
@@ -19,8 +18,8 @@ const ContactUs = () => {
         const handleSubmit = async (event) => {
             event.preventDefault();
             try {
-            const response = await axios.post(
-                "http://localhost:5000/api/contact-us",
+            await axios.post(
+                "http://localhost:4000/api/contact-us",
                 { fullName, email, userRole, issue, issueText },
                 
             );
@@ -45,7 +44,6 @@ const ContactUs = () => {
  
     return(
         <div>
-            <div> <NavBar /> </div>
             <div>{error && <Alert style={{left: 0, right: 0, zIndex: 9999}} key='success' variant='success'>{error}</Alert> }</div>
             <div className="all">
                 <div className="feedback-container">
@@ -85,7 +83,7 @@ const ContactUs = () => {
                                     style={{marginBottom:'15px'}}
                                     required>
 
-                                    <option disabled selected value="">Select role </option>
+                                    <option disabled value="">Select role </option>
                                     <option>Teacher</option>
                                     <option>Student</option>
                                     <option>Parent</option>

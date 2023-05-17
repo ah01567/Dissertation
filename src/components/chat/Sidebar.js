@@ -15,7 +15,7 @@ const Sidebar = () => {
       </Row>
       <Row>
         <Col>
-          <h4>Friends</h4> {/* Add the Friends title here */}
+          <h4>Friends</h4> 
           <FriendsList />
         </Col>
       </Row>

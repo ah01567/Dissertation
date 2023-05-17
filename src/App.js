@@ -1,3 +1,4 @@
+import NavBar from '../src/components/NavBar';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
@@ -9,14 +10,18 @@ import Progress from './pages/progress';
 import Feedback from './pages/Feedback';
 import UserDetails from './pages/UserDetails';
 import ContactUs from './pages/ContactUs';
+import useAuth from "../src/pages/CurrentUser";
 import { BrowserRouter as Router} from 'react-router-dom';
 import {Routes, Route} from 'react-router-dom';
  
 function App() {
- 
+
+  const { currentUser } = useAuth();
+
   return (
     <Router>
       <div>
+      {currentUser && <NavBar />}
         <section>                              
             <Routes>
                <Route exact path="/" element={<Home/>}/>

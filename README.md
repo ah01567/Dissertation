@@ -2,17 +2,40 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
+--------------------------------------- PROJECT RUNNING AND TESTING -----------------------------
 In the project directory, you can run:
-
+ 
+ RUN THE APP: 
 ### `npm start`
+
+ RUN THE SERVER: 
+### `cd server` 
+### `node server.js` 
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Backend listening at PORT:4000
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+--------------------------------------- GITHUB REPO --------------------------------------------
+  
+  repo link: https://github.com/ah01567/Dissertation
+
+--------------------------------------- PROJECT TESTING ACCOUNTS -----------------------------
+
+Ive already set few account for testing, which can be used to test the app
+
+ADMIN ACCOUNT: 
+    email: test2@tets.com
+    password: Test2.
+
+Non-ADMIN account: 
+    email: test1@tets.com
+    password: Test1.
+
+-----------------------------------------------------------------------------------------------
 
 ### `npm test`
 

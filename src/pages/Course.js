@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '../components/NavBar';
 import Spinner from '../components/Spinner';
 import useAuth from "./CurrentUser";
 import GeneralKnowledgeTicket from '../components/course/GeneralKnowledgeTicket';
@@ -111,6 +110,7 @@ const Course = () => {
           };
         }, []);
 
+        
         useEffect(() => {
           const userID = currentUser?.uid;
           const modulesRef = isAdmin ? ref(db, `TeacherModules/${userID}`)
@@ -126,7 +126,13 @@ const Course = () => {
                 setDisplayedModules([]);
               }
           })
-        })
+          // Cleanup function to remove the listener when the component unmounts
+          return () => {
+            if (modulesRef) {
+              off(modulesRef);
+            }
+          };
+        }, [currentUser, isAdmin]);
 
         if (!firebaseInitialized) {
             return <Spinner />;
@@ -134,7 +140,6 @@ const Course = () => {
       
     return(       
         <div>
-            <div><NavBar/></div>    
 
             <div className='modules-container'>
                 {isAdmin && <button className="module-btn"  onClick={() => setShowNewModuleSection(true)}><FaPlus className="plus-icon" /></button>}
