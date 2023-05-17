@@ -18,7 +18,7 @@ const ContactUs = () => {
         const handleSubmit = async (event) => {
             event.preventDefault();
             try {
-            const response = await axios.post(
+            await axios.post(
                 "http://localhost:5000/api/contact-us",
                 { fullName, email, userRole, issue, issueText },
                 

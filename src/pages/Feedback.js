@@ -18,7 +18,7 @@ const Feedback = () => {
             event.preventDefault();
           
             try {
-            const response = await axios.post(
+            await axios.post(
                 "http://localhost:5000/api/submit-feedback",
                 { fullName, email, userRole, feedbackText }
             );
